@@ -13,6 +13,11 @@ const Register = () => {
     const [displayName, setDisplayName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [city, setCity] = useState("");
+    const [state, setState] = useState("");
+    const [zipCode, setZipCode] = useState("");
+    const [bio, setBio] = useState("");
+    const [profileImage, setProfileImage] = useState("");
     const [confirm, setConfirm] = useState("");
     const history = useHistory();
 
@@ -30,6 +35,11 @@ const Register = () => {
             lastName,
             displayName,
             email,
+            city,
+            state,
+            zipCode,
+            bio,
+            profileImage,
         };
         register(profile, password)
             .then((user) => {
@@ -87,6 +97,56 @@ const Register = () => {
                         className="form-control"
                         name="email"
                         placeholder="Email"
+                        required="required"
+                    />
+                </div>
+                <div className="form-group">
+                    <Input
+                        onChange={(e) => setCity(e.target.value)}
+                        type="text"
+                        className="form-control"
+                        name="city"
+                        placeholder="City"
+                        required="required"
+                    />
+                </div>
+                <div className="form-group">
+                    <Input
+                        onChange={(e) => setState(e.target.value)}
+                        type="text"
+                        className="form-control"
+                        name="state"
+                        placeholder="State"
+                        required="required"
+                    />
+                </div>
+                <div className="form-group">
+                    <Input
+                        onChange={(e) => setZipCode(e.target.value)}
+                        type="numbers"
+                        className="form-control"
+                        name="zipCode"
+                        placeholder="Zip Code"
+                        required="required"
+                    />
+                </div>
+                <div className="form-group">
+                    <Input
+                        onChange={(e) => setBio(e.target.value)}
+                        type="text"
+                        className="form-control"
+                        name="bio"
+                        placeholder="Bio"
+                        required="required"
+                    />
+                </div>
+                <div className="form-group">
+                    <Input
+                        onChange={(e) => setProfileImage(e.target.value)}
+                        type="text"
+                        className="form-control"
+                        name="profileImage"
+                        placeholder="Profile Image"
                         required="required"
                     />
                 </div>
