@@ -13,6 +13,11 @@ const Register = () => {
     const [displayName, setDisplayName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [city, setCity] = useState("");
+    const [state, setState] = useState("");
+    const [zipCode, setZipCode] = useState("");
+    const [bio, setBio] = useState("");
+    const [profileImg, setProfileImg] = useState("");
     const [confirm, setConfirm] = useState("");
     const history = useHistory();
 
@@ -30,6 +35,11 @@ const Register = () => {
             lastName,
             displayName,
             email,
+            city,
+            state,
+            zipCode,
+            bio,
+            profileImg,
         };
         register(profile, password)
             .then((user) => {
@@ -72,11 +82,61 @@ const Register = () => {
                 </div>
                 <div className="form-group">
                     <Input
+                        onChange={(e) => setCity(e.target.value)}
+                        type="text"
+                        className="form-control"
+                        name="city"
+                        placeholder="City"
+                        required="required"
+                    />
+                </div>
+                <div className="form-group">
+                    <Input
+                        onChange={(e) => setState(e.target.value)}
+                        type="text"
+                        className="form-control"
+                        name="state"
+                        placeholder="State"
+                        required="required"
+                    />
+                </div>
+                <div className="form-group">
+                    <Input
+                        onChange={(e) => setZipCode(e.target.value)}
+                        type="text"
+                        className="form-control"
+                        name="zipCode"
+                        placeholder="Zip Code"
+                        required="required"
+                    />
+                </div>
+                <div className="form-group">
+                    <Input
                         onChange={(e) => setDisplayName(e.target.value)}
                         type="text"
                         className="form-control"
                         name="displayName"
                         placeholder="Display Name"
+                        required="required"
+                    />
+                </div>
+                <div className="form-group">
+                    <Input
+                        onChange={(e) => setBio(e.target.value)}
+                        type="text"
+                        className="form-control"
+                        name="bio"
+                        placeholder="Bio"
+                        required="required"
+                    />
+                </div>
+                <div className="form-group">
+                    <Input
+                        onChange={(e) => setProfileImg(e.target.value)}
+                        type="text"
+                        className="form-control"
+                        name="profileImg"
+                        placeholder="Profile Image"
                         required="required"
                     />
                 </div>
