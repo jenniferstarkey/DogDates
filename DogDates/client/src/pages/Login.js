@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import { UserProfileContext } from "../providers/UserProfileProvider";
 import "./Login.css";
 import { toast } from 'react-toastify';
-//import "toastify-js/src/toastify.css";
+import "toastify-js/src/toastify.css";
 
 
 const Login = () => {
