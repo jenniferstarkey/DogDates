@@ -1,5 +1,6 @@
 .App {
   text-align: center;
+  background-color: #e3f6f5;
 }
 
 .App-logo {
@@ -22,6 +23,7 @@
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
+  
 }
 
 .App-link {
@@ -35,4 +37,10 @@
   to {
     transform: rotate(360deg);
   }
+}
+.primaryButton {
+  background-color: #EE5500;
+  border-radius: 4px;
+  padding: 12px 28px;
+  
 }

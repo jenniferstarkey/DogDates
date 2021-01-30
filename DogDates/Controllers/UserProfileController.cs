@@ -35,7 +35,7 @@ namespace DogDates.Controllers
             _repo.Add(userProfile);
             return CreatedAtAction(
                 nameof(GetUserProfile),
-                new { firebaseId = userProfile.FirebaseId },
+                new { firebaseUserId = userProfile.FirebaseId },
 
                 userProfile);
         }
