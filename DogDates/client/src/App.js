@@ -1,6 +1,7 @@
 import { BrowserRouter as Router } from "react-router-dom";
 import ApplicationViews from "./components/ApplicationViews";
 import { UserProfileProvider } from "./providers/UserProfileProvider";
+import AppHeader from "./components/Header"
 import "./App.css";
 
 function App() {
@@ -9,6 +10,7 @@ function App() {
       <UserProfileProvider>
         <Router>
           <ApplicationViews />
+          <AppHeader />
         </Router>
       </UserProfileProvider>
     </div>
