@@ -1,0 +1,10 @@
+.park_img{
+    background-size: cover;
+    background-position: center;
+    height: 100%;
+}
+@media only screen and (max-width: 992px) {
+    .post-summary__img {
+      min-height: 300px;
+    }
+}

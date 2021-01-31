@@ -9,8 +9,8 @@ function App() {
     <div className="App">
       <UserProfileProvider>
         <Router>
-          <ApplicationViews />
           <AppHeader />
+          <ApplicationViews />
         </Router>
       </UserProfileProvider>
     </div>
