@@ -4,6 +4,7 @@ import { UserProfileContext } from "../providers/UserProfileProvider";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
 import Explore from "../pages/Explore";
+import ParkDetails from "../pages/ParkDetails";
 
 
 const ApplicationViews = () => {
@@ -16,6 +17,9 @@ const ApplicationViews = () => {
             </Route>
             <Route path="/explore" exact>
                 {isLoggedIn ? <Explore /> : <Redirect to="/login" />}
+            </Route>
+            <Route path="/park/:parkId(\d+)" >
+                {isLoggedIn ? <ParkDetails /> : <Redirect to="/login" />}
             </Route>
 
             <Route path="/login">
