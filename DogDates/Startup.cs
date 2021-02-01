@@ -33,7 +33,8 @@ namespace DogDates
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddTransient<IUserProfileRepository, UserProfileRepository>();
-            services.AddTransient<IParkRepository, ParkRepository> ();
+            services.AddTransient<IParkRepository, ParkRepository>();
+            services.AddTransient<IEventRepository, EventRepository>();
 
             services.AddDbContext<ApplicationDbContext>(options =>
                             options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
