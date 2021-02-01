@@ -14,5 +14,6 @@ namespace DogDates.Models
         public string State { get; set; }
         public int ZipCode { get; set; }
         public string ParkImage { get; set; }
+        public List<Event> Events { get; set; }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using DogDates.Data;
 using DogDates.Models;
 using DogDates.Repositories;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,6 +28,8 @@ namespace DogDates.Repositories
             return _context.Park
                 //will need to include park events, reviews
                 .Where(p => p.Id == id)
+                .Include(p => p.Events)
+                .ThenInclude(e => e.UserProfile)
                 .FirstOrDefault();
         }
     }
