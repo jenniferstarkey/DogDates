@@ -22,5 +22,12 @@ namespace DogDates.Repositories
         {
             return _context.Park.ToList();
         }
+        public Park GetParkById(int id)
+        {
+            return _context.Park
+                //will need to include park events, reviews
+                .Where(p => p.Id == id)
+                .FirstOrDefault();
+        }
     }
 }

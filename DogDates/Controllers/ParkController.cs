@@ -23,5 +23,15 @@ namespace DogDates.Controllers
             var parks = _repo.Get();
             return Ok(parks);
         }
+        [HttpGet("{id}")]
+        public IActionResult GetParkById(int id)
+        {
+            var park = _repo.GetParkById(id);
+            if (park == null)
+            {
+                return NotFound();
+            }
+            return Ok(park);
+        }
     }
 }
