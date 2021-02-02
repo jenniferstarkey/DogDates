@@ -12,5 +12,6 @@ namespace DogDates.Models
         public string Content { get; set; }
         public int EventId { get; set; }
         public int UserProfileId { get; set; }
+        public UserProfile userProfile { get; set; }
     }
 }

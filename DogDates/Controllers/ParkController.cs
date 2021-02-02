@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using DogDates.Repositories;
+using DogDates.Models;
+using System.Security.Claims;
 
 namespace DogDates.Controllers
 {
@@ -13,9 +15,13 @@ namespace DogDates.Controllers
     public class ParkController : ControllerBase
     {
         private readonly IParkRepository _repo;
-    public ParkController(IParkRepository repo)
+        private readonly IEventRepository _eventRepo;
+        private readonly IUserProfileRepository _userRepo;
+    public ParkController(IParkRepository repo, IUserProfileRepository userRepo, IEventRepository eventRepo)
     {
         _repo = repo;
+        _eventRepo = eventRepo;
+        _userRepo = userRepo;
     }
         [HttpGet]
         public IActionResult Get()
@@ -33,5 +39,22 @@ namespace DogDates.Controllers
             }
             return Ok(park);
         }
+        private UserProfile GetCurrentUser()
+        {
+            var firebaseUserId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            return _repo.GetByFirebaseUserId(firebaseUserId);
+        }
+        [HttpPost("addEvent")]
+        public IActionResult Add(Event taco)
+        {
+            var user = GetCurrentUser();
+            taco.UserProfileId = user.Id;
+            taco.CreatedDateTime = DateTime.Now;
+            _repo.Add(taco);
+            return Ok(taco);
+        }
+
+
+
     }
 }

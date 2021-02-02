@@ -15,6 +15,11 @@ namespace DogDates.Repositories
         {
             _context = context;
         }
+        public UserProfile GetByFirebaseUserId(string firebaseUserId)
+        {
+            return _context.UserProfile
+               .FirstOrDefault(up => up.FirebaseId == firebaseUserId);
+        }
         public List<Event> GetById(int parkId)
         {
             return _context.Event
@@ -22,5 +27,25 @@ namespace DogDates.Repositories
                 .Where(e => e.ParkId == parkId)
                 .ToList();
         }
+        public Event GetEventById(int id)
+        {
+            return _context.Event
+                .Include(e => e.UserProfile)
+                .Include(e => e.Comments)
+                .ThenInclude(c => c.userProfile)
+                .FirstOrDefault(e => e.Id == id);
+        }
+        public void Delete(int id)
+        {
+            var eventToDelete = GetEventById(id);
+                _context.Remove(eventToDelete);
+                _context.SaveChanges();
+        }
+        public void Update(Event taco)
+        {
+            _context.Entry(taco).State = EntityState.Modified;
+            _context.SaveChanges();
+        }
+       
     }
 }

@@ -114,4 +114,5 @@ export function UserProfileProvider(props) {
                 )}
         </UserProfileContext.Provider>
     );
-}
+};
+

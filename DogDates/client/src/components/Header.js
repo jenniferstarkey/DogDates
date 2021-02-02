@@ -46,33 +46,33 @@ const AppHeader = () => {
                     <Nav className="mr-auto" navbar>
                         {user ? (
                             <>
-                                {/* <NavItem>
+                                <NavItem>
                                     <NavLink to="/explore" tag={Link}>
                                         Explore
                         </NavLink>
                                 </NavItem>
                                 <NavItem>
                                     <NavLink to="/post/add" tag={Link}>
-                                        New Post
-                        </NavLink>
+                                        {/* New Post */}
+                                    </NavLink>
                                 </NavItem>
                                 <NavItem>
                                     <NavLink to="/myposts" tag={Link}>
-                                        My Post
-                  </NavLink>
+                                        {/* My Post */}
+                                    </NavLink>
                                 </NavItem>
                                 {isAdmin() && (
                                     <NavItem>
                                         <NavLink to="/categories" tag={Link}>
-                                            Categories
-                    </NavLink>
+                                            {/* Categories */}
+                                        </NavLink>
                                     </NavItem>
                                 )}
                                 {isAdmin() && (
                                     <NavItem>
                                         <NavLink to="/tags" tag={Link}>
-                                            Tags
-                    </NavLink>
+                                            {/* Tags */}
+                                        </NavLink>
                                     </NavItem>
                                 )} */}
                                 <NavItem>
