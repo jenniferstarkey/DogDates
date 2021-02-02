@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { Jumbotron } from "reactstrap";
 import EventCard from "../components/EventCard"
+import { EventForm } from "../components/EventForm";
 
 
 const ParkDetails = () => {
@@ -20,17 +21,14 @@ const ParkDetails = () => {
                 return res.json();
             }).then((res) => {
                 setPark(res);
+                setEvent(res.events);
             })
     }, []);
 
-    useEffect(() => {
-        fetch(`/api/event/${parkId}`)
-            .then((res) => res.json())
-            .then((event) => {
-                setEvent(event);
-            });
-    }, []);
 
+    if (event == undefined) {
+        return null
+    }
     return (
         <div>
             <Jumbotron style={{ backgroundImage: `url('${park.parkImage}')` }}>
@@ -39,9 +37,13 @@ const ParkDetails = () => {
                 <h1>{park.name}</h1>
                 <p>{park.street} {park.city}, {park.state} {park.zipCode}</p>
             </div>
-            {event.map(event => {
-                return <EventCard key={event.id} event={event} />
-            })}
+            <div>
+                <h2>Events</h2>
+                <EventForm />
+                {event.map(event => {
+                    return <EventCard key={event.id} event={event} />
+                })}
+            </div>
         </div>
     );
 };

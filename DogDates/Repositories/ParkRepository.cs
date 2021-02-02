@@ -27,10 +27,23 @@ namespace DogDates.Repositories
         {
             return _context.Park
                 //will need to include park events, reviews
-                .Where(p => p.Id == id)
                 .Include(p => p.Events)
-                .ThenInclude(e => e.UserProfile)
+                    .ThenInclude(e => e.UserProfile)
+                .Where(p => p.Id == id)
                 .FirstOrDefault();
         }
+        public UserProfile GetByFirebaseUserId(string firebaseUserId)
+        {
+            return _context.UserProfile
+               .FirstOrDefault(up => up.FirebaseId == firebaseUserId);
+        }
+        public void Add(Event taco)
+        {
+            _context.Add(taco);
+            _context.SaveChanges();
+        }
+
+
+
     }
 }

@@ -15,5 +15,6 @@ namespace DogDates.Models
         public DateTime EventDateTime { get; set; }
         public int ParkId { get; set; }
         public DateTime CreatedDateTime { get; set; }
+        public List<Comment> Comments { get; set; }
     }
 }
