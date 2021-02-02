@@ -6,10 +6,9 @@ import {
 } from "reactstrap";
 
 
-export const EventForm = () => {
+export const EventForm = (props) => {
     const { parkId } = useParams();
     const { getToken } = useContext(UserProfileContext);
-    const history = useHistory();
     const [title, setTitle] = useState("");
     const [details, setDetails] = useState("");
     const [eventDateTime, setEventDateTime] = useState("");
@@ -34,7 +33,22 @@ export const EventForm = () => {
                     body: JSON.stringify(newEvent),
                 })
             )
-            .then(() => history.push(`/park/${parkId}`));
+            .then(() => {
+                getToken()
+            }).then((token) =>
+                fetch(`/api/park/${newEvent.parkId}`, {
+                    method: "GET",
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                })
+
+            ).then((res) => res.json()).then((park) => {
+                console.log(park)
+                props.setEvent(park.events)
+            }
+            );
+
     };
     return (
         <div className="container pt-4">
