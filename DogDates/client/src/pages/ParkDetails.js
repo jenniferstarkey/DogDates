@@ -22,6 +22,7 @@ const ParkDetails = () => {
             }).then((res) => {
                 setPark(res);
                 setEvent(res.events);
+                console.log(res.events)
             })
     }, []);
 
@@ -39,7 +40,9 @@ const ParkDetails = () => {
             </div>
             <div>
                 <h2>Events</h2>
-                <EventForm />
+                <EventForm
+                    setEvent={setEvent}
+                />
                 {event.map(event => {
                     return <EventCard key={event.id} event={event} />
                 })}
