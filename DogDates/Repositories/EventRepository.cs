@@ -47,6 +47,11 @@ namespace DogDates.Repositories
             _context.Entry(taco).State = EntityState.Modified;
             _context.SaveChanges();
         }
+        public void Add(Comment comment)
+        {
+            _context.Add(comment);
+            _context.SaveChanges();
+        }
        
     }
 }

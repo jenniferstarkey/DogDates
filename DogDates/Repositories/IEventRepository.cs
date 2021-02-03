@@ -10,6 +10,7 @@ namespace DogDates.Repositories
         Event GetEventById(int id);
         public void Delete(int id);
         void Update(Event taco);
+        void Add(Comment comment);
 
     }
 }

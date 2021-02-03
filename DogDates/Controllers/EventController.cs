@@ -57,7 +57,15 @@ namespace DogDates.Controllers
             _eventRepo.Update(taco);
                 return NoContent();
             }
-            
+         [HttpPost("addComment")]
+         public IActionResult Add(Comment comment)
+        {
+            var user = GetCurrentUser();
+            comment.UserProfileId = user.Id;
+            comment.CreatedDateTIme = DateTime.Now;
+            _eventRepo.Add(comment);
+            return Ok(comment);
+        }
         
     }
 }
