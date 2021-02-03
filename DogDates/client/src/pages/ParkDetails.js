@@ -22,7 +22,6 @@ const ParkDetails = () => {
             }).then((res) => {
                 setPark(res);
                 setEvent(res.events);
-                console.log(res.events)
             })
     }, []);
 

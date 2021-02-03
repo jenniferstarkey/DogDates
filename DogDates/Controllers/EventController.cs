@@ -48,7 +48,13 @@ namespace DogDates.Controllers
         [HttpPut("{id}")]
         public IActionResult Update(int id, Event taco)
             {
-             _eventRepo.Update(taco);
+            var user = GetCurrentUser();
+            var eventToDelete = _eventRepo.GetEventById(id);
+            if (eventToDelete.UserProfileId != user.Id)
+            {
+                return Unauthorized();
+            }
+            _eventRepo.Update(taco);
                 return NoContent();
             }
             
