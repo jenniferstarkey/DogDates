@@ -44,7 +44,6 @@ export const EventForm = (props) => {
                 })
 
             ).then((res) => res.json()).then((park) => {
-                console.log(park)
                 props.setEvent(park.events)
             }
             );

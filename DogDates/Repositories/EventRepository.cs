@@ -33,7 +33,8 @@ namespace DogDates.Repositories
                 .Include(e => e.UserProfile)
                 .Include(e => e.Comments)
                 .ThenInclude(c => c.userProfile)
-                .FirstOrDefault(e => e.Id == id);
+                .Where(e => e.Id == id)
+                .FirstOrDefault();
         }
         public void Delete(int id)
         {

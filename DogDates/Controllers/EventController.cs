@@ -49,8 +49,8 @@ namespace DogDates.Controllers
         public IActionResult Update(int id, Event taco)
             {
             var user = GetCurrentUser();
-            var eventToDelete = _eventRepo.GetEventById(id);
-            if (eventToDelete.UserProfileId != user.Id)
+
+            if (taco.UserProfileId != user.Id)
             {
                 return Unauthorized();
             }
