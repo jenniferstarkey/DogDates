@@ -74,7 +74,7 @@ const AppHeader = () => {
                                             {/* Tags */}
                                         </NavLink>
                                     </NavItem>
-                                )} */}
+                                )}
                                 <NavItem>
                                     <NavLink onClick={logoutAndReturn}>Logout</NavLink>
                                 </NavItem>

@@ -4,6 +4,8 @@ import { toast } from "react-toastify";
 import EventCard from "../components/EventCard";
 import { UserProfileContext } from "../providers/UserProfileProvider";
 import formatDate from "../utils/dateFormatter";
+import { Spinner } from "reactstrap";
+
 import {
     Button,
     Form, Input,
@@ -108,56 +110,67 @@ const EventDetails = (event) => {
             return null;
         }
     }
+    if (theEvent.userProfile == undefined) {
+        return <Spinner className="app-spinner dark" />
+    }
+    else {
 
-    return (
-        <div className="container pt-4">
-            <div className="row justify-content-center">
-                {/* If user is editing */}
-                {isEditing ? (
-                    <Form className="w-100">
-                        <InputGroup>
-                            <Input size="sm" onChange={(e) => handleChange(e)}
-                                value={theEvent.title} id="title" />
-                            <Input size="sm" onChange={(e) => handleChange(e)}
-                                value={theEvent.details} id="details" />
-                            <Input type="date" size="sm" onChange={(e) => handleChange(e)}
-                                value={theEvent.eventDateTime} id="eventDateTime" />
-                            <ButtonGroup size="sm">
-                                <Button onClick={updateEvent}>Save</Button>
-                                <Button outline color="danger" onClick={hideEdit}>
-                                    Cancel
+
+        return (
+            <div className="container pt-4">
+                <div className="row justify-content-center">
+                    {/* If user is editing */}
+                    {isEditing ? (
+                        <Form className="w-100">
+                            <InputGroup>
+                                <Input size="sm" onChange={(e) => handleChange(e)}
+                                    value={theEvent.title} id="title" />
+                                <Input size="sm" onChange={(e) => handleChange(e)}
+                                    value={theEvent.details} id="details" />
+                                <Input type="date" size="sm" onChange={(e) => handleChange(e)}
+                                    value={theEvent.eventDateTime} id="eventDateTime" />
+                                <ButtonGroup size="sm">
+                                    <Button onClick={updateEvent}>Save</Button>
+                                    <Button outline color="danger" onClick={hideEdit}>
+                                        Cancel
                 </Button>
-                            </ButtonGroup>
-                        </InputGroup>
-                    </Form>
-                ) : (
-                        // If user is not editing
-                        <><div>
-                            <h2> {theEvent.title}</h2>
-                            <p>{theEvent.details}<br />
-                                {formatDate(theEvent.eventDateTime)}<br />
-                            </p>
-                            <div>
-                                {/* {theEvent.userProfile.displayName} */}
+                                </ButtonGroup>
+                            </InputGroup>
+                        </Form>
+                    ) : (
+                            // If user is not editing
+                            <><div>
+                                <h2> {theEvent.title}</h2>
+                                <p>{theEvent.details}<br />
+                                    {theEvent.eventDateTime == undefined ? null : formatDate(theEvent.eventDateTime)}<br />
+                                </p>
+                                <div>
+                                    {theEvent.userProfile.displayName}
+                                    <img
+                                        src={theEvent.userProfile.profileImage}
+                                        alt={theEvent.userProfile.displayName}
+                                        className="park-details__avatar rounded-circle"
+                                    />
+                                </div>
                             </div>
-                            <EditButton />
-                            <DeleteButton />
-                        </div>
-                        </>
-                    )}
-                <Modal isOpen={pendingDelete}>
-                    <ModalHeader>Delete {theEvent.title}?</ModalHeader>
-                    <ModalBody>
-                        Are you sure you want to delete your event <strong>{theEvent.title}</strong>? This action cannot be
+                                <EditButton />
+                                <DeleteButton />
+                            </>
+                        )}
+                    <Modal isOpen={pendingDelete}>
+                        <ModalHeader>Delete {theEvent.title}?</ModalHeader>
+                        <ModalBody>
+                            Are you sure you want to delete your event <strong>{theEvent.title}</strong>? This action cannot be
           undone.
         </ModalBody>
-                    <ModalFooter>
-                        <Button onClick={(e) => setPendingDelete(false)}>No, Cancel</Button>
-                        <Button onClick={deleteEvent} className="btn btn-outline-danger">Yes, Delete</Button>
-                    </ModalFooter>
-                </Modal>
-            </div>
-        </div>
-    )
+                        <ModalFooter>
+                            <Button onClick={(e) => setPendingDelete(false)}>No, Cancel</Button>
+                            <Button onClick={deleteEvent} className="btn btn-outline-danger">Yes, Delete</Button>
+                        </ModalFooter>
+                    </Modal>
+                </div>
+            </div >
+        )
+    }
 };
 export default EventDetails;
