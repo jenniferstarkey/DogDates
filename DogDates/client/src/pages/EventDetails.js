@@ -5,6 +5,7 @@ import EventCard from "../components/EventCard";
 import { UserProfileContext } from "../providers/UserProfileProvider";
 import formatDate from "../utils/dateFormatter";
 import { Spinner } from "reactstrap";
+import CommentList from "../components/CommentList";
 
 import {
     Button,
@@ -168,6 +169,9 @@ const EventDetails = (event) => {
                             <Button onClick={deleteEvent} className="btn btn-outline-danger">Yes, Delete</Button>
                         </ModalFooter>
                     </Modal>
+                </div>
+                <div>
+                    <CommentList />
                 </div>
             </div >
         )
