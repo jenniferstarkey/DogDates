@@ -33,7 +33,8 @@ namespace DogDates.Repositories
                 .Include(e => e.UserProfile)
                 .Include(e => e.Comments)
                 .ThenInclude(c => c.userProfile)
-                .FirstOrDefault(e => e.Id == id);
+                .Where(e => e.Id == id)
+                .FirstOrDefault();
         }
         public void Delete(int id)
         {
@@ -44,6 +45,11 @@ namespace DogDates.Repositories
         public void Update(Event taco)
         {
             _context.Entry(taco).State = EntityState.Modified;
+            _context.SaveChanges();
+        }
+        public void Add(Comment comment)
+        {
+            _context.Add(comment);
             _context.SaveChanges();
         }
        

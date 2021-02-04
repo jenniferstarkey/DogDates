@@ -49,15 +49,23 @@ namespace DogDates.Controllers
         public IActionResult Update(int id, Event taco)
             {
             var user = GetCurrentUser();
-            var eventToDelete = _eventRepo.GetEventById(id);
-            if (eventToDelete.UserProfileId != user.Id)
+
+            if (taco.UserProfileId != user.Id)
             {
                 return Unauthorized();
             }
             _eventRepo.Update(taco);
                 return NoContent();
             }
-            
+         [HttpPost("addComment")]
+         public IActionResult Add(Comment comment)
+        {
+            var user = GetCurrentUser();
+            comment.UserProfileId = user.Id;
+            comment.CreatedDateTIme = DateTime.Now;
+            _eventRepo.Add(comment);
+            return Ok(comment);
+        }
         
     }
 }
