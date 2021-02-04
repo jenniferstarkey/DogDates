@@ -37,5 +37,11 @@ namespace DogDates.Repositories
             _context.Entry(comment).State = EntityState.Modified;
             _context.SaveChanges();
         }
+        public void Delete(int id)
+        {
+            var commentToDelete = GetCommentById(id);
+            _context.Remove(commentToDelete);
+            _context.SaveChanges();
+        }
     }
 }

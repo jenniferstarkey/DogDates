@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
-import { Jumbotron } from "reactstrap";
+import { Jumbotron, Button } from "reactstrap";
 import EventCard from "../components/EventCard"
 import { EventForm } from "../components/EventForm";
 
@@ -10,6 +10,7 @@ const ParkDetails = () => {
     const { parkId } = useParams();
     const [park, setPark] = useState([]);
     const [event, setEvent] = useState([]);
+    const history = useHistory();
 
     useEffect(() => {
         fetch(`/api/Park/${parkId}`)
@@ -31,6 +32,9 @@ const ParkDetails = () => {
     }
     return (
         <div>
+            <Button onClick={() => {
+                history.goBack()
+            }}>Go Back</Button>
             <Jumbotron style={{ backgroundImage: `url('${park.parkImage}')` }}>
             </Jumbotron>
             <div className="container">

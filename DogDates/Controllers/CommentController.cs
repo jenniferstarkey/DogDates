@@ -48,5 +48,17 @@ namespace DogDates.Controllers
             _commentRepo.Update(existingComment);
             return NoContent();
         }
+        [HttpDelete("{id}")]
+        public IActionResult Delete(int id)
+        {
+            var user = GetCurrentUser();
+            var commentToDelete = _commentRepo.GetCommentById(id);
+            if (commentToDelete.UserProfileId != user.Id)
+            {
+                return Unauthorized();
+            }
+            _commentRepo.Delete(id);
+            return NoContent();
+        }
     }
 }

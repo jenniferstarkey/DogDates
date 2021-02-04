@@ -9,5 +9,6 @@ namespace DogDates.Repositories
         Comment GetCommentById(int id);
         UserProfile GetByFirebaseUserId(string firebaseUserId);
         void Update(Comment comment);
+        void Delete(int id);
     }
 }
