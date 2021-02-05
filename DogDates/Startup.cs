@@ -36,6 +36,7 @@ namespace DogDates
             services.AddTransient<IParkRepository, ParkRepository>();
             services.AddTransient<IEventRepository, EventRepository>();
             services.AddTransient<ICommentRepository, CommentRepository>();
+            services.AddTransient<IParkFavoritesRepository, ParkFavoritesRepository>();
 
 
             services.AddDbContext<ApplicationDbContext>(options =>
