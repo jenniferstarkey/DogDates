@@ -7,5 +7,6 @@ namespace DogDates.Repositories
     {
         List<ParkFavorites> GetByUserId(int userId);
         UserProfile GetByFirebaseUserId(string firebaseUserId);
+        bool CheckIfExists(int parkId, int userProfileId);
     }
 }

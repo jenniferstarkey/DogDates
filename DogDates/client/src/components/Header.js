@@ -68,13 +68,13 @@ const AppHeader = () => {
                                         </NavLink>
                                     </NavItem>
                                 )}
-                                {isAdmin() && (
-                                    <NavItem>
-                                        <NavLink to="/tags" tag={Link}>
-                                            {/* Tags */}
+
+                                <NavItem>
+                                    <NavLink to="/myAccount" tag={Link}>
+                                        My Account
                                         </NavLink>
-                                    </NavItem>
-                                )}
+                                </NavItem>
+
                                 <NavItem>
                                     <NavLink onClick={logoutAndReturn}>Logout</NavLink>
                                 </NavItem>

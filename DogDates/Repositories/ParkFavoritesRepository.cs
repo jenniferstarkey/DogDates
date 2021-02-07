@@ -19,7 +19,7 @@ namespace DogDates.Repositories
         {
             return _context.ParkFavorites
                 .Where(p => p.UserProfileId == userId)
-                .Include(p => p.favortiedPark)
+                .Include(p => p.favoritedPark)
                 .ToList();
         }
         public UserProfile GetByFirebaseUserId(string firebaseUserId)
@@ -27,6 +27,12 @@ namespace DogDates.Repositories
             return _context.UserProfile
                .FirstOrDefault(up => up.FirebaseId == firebaseUserId);
         }
-     
+        //public void Add(ParkFavorites parkFavorites)
+
+        public bool CheckIfExists(int parkId, int userProfileId)
+        {
+            return _context.ParkFavorites
+                .Any(p => p.ParkId == parkId && p.UserProfileId == userProfileId);
+        }
     }
 }

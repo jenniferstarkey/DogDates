@@ -45,7 +45,7 @@ export function UserProfileProvider(props) {
             .auth()
             .createUserWithEmailAndPassword(userProfile.email, password)
             .then((createResponse) =>
-                saveUser({ ...userProfile, firebaseId: createResponse.user.uid })
+                saveUser({ ...userProfile, firebaseUserId: createResponse.user.uid })
             )
             .then((savedUserProfile) => {
                 localStorage.setItem("userProfile", JSON.stringify(savedUserProfile));
@@ -68,7 +68,6 @@ export function UserProfileProvider(props) {
     };
 
     const saveUser = (userProfile) => {
-        debugger;
         return getToken().then((token) =>
             fetch(apiUrl, {
                 method: "POST",
@@ -114,5 +113,4 @@ export function UserProfileProvider(props) {
                 )}
         </UserProfileContext.Provider>
     );
-};
-
+}

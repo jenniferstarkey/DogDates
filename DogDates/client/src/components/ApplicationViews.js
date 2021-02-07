@@ -6,7 +6,8 @@ import Register from "../pages/Register";
 import Explore from "../pages/Explore";
 import ParkDetails from "../pages/ParkDetails";
 import EventDetails from "../pages/EventDetails";
-
+import ParkFavorites from "./ParkFavorites";
+import MyAccount from "../pages/MyAccount";
 
 const ApplicationViews = () => {
     const { isLoggedIn } = useContext(UserProfileContext);
@@ -14,7 +15,7 @@ const ApplicationViews = () => {
     return (
         <Switch>
             <Route path="/" exact>
-                {isLoggedIn ? <p>Home</p> : <Redirect to="/login" />}
+                {isLoggedIn ? <ParkFavorites /> : <Redirect to="/login" />}
             </Route>
             <Route path="/explore" exact>
                 {isLoggedIn ? <Explore /> : <Redirect to="/login" />}
@@ -25,7 +26,9 @@ const ApplicationViews = () => {
             <Route path="/event/:eventId(\d+)" >
                 {isLoggedIn ? <EventDetails /> : <Redirect to="/login" />}
             </Route>
-
+            {/* <Route path="/myAccount" >
+                {isLoggedIn ? <MyAccount /> : <Redirect to="/login" />}
+            </Route> */}
 
             <Route path="/login">
                 <Login />

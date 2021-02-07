@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using DogDates.Repositories;
 using DogDates.Models;
 using System.Security.Claims;
+using DogDates.ViewModels;
 
 namespace DogDates.Controllers
 {
@@ -17,16 +18,23 @@ namespace DogDates.Controllers
         private readonly IParkRepository _repo;
         private readonly IEventRepository _eventRepo;
         private readonly IUserProfileRepository _userRepo;
-    public ParkController(IParkRepository repo, IUserProfileRepository userRepo, IEventRepository eventRepo)
+        private readonly IParkFavoritesRepository _parkFavRepo;
+    public ParkController(IParkRepository repo, IUserProfileRepository userRepo, IEventRepository eventRepo, IParkFavoritesRepository parkFavRepo)
     {
         _repo = repo;
         _eventRepo = eventRepo;
         _userRepo = userRepo;
+            _parkFavRepo = parkFavRepo;
     }
         [HttpGet]
         public IActionResult Get()
         {
+            var user = GetCurrentUser();
             var parks = _repo.Get();
+            foreach (ParkFavorite parkFavorite in parks)
+            {
+                parkFavorite.IsFavorited = _parkFavRepo.CheckIfExists(parkFavorite.Id, user.Id);
+            }
             return Ok(parks);
         }
         [HttpGet("{id}")]

@@ -1,6 +1,7 @@
 ﻿using DogDates.Data;
 using DogDates.Models;
 using DogDates.Repositories;
+using DogDates.ViewModels;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -19,9 +20,21 @@ namespace DogDates.Repositories
         }
 
         //Get all the parks for the lists. Should only include name of park, image, location
-        public List<Park> Get()
+        public List<ParkFavorite> Get()
         {
-            return _context.Park.ToList();
+            return _context.Park
+                .Select( p => new ParkFavorite()
+                {
+                    Id = p.Id,
+                    Name = p.Name,
+                    Street = p.Street,
+                    City = p.City,
+                    State = p.State,
+                    ZipCode = p.ZipCode,
+                    ParkImage = p.ParkImage,
+
+                })
+                .ToList();
         }
         public Park GetParkById(int id)
         {

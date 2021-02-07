@@ -11,6 +11,6 @@ namespace DogDates.Models
         public int UserProfileId { get; set; }
         public int ParkId { get; set; }
         public UserProfile userProfile { get; set; }
-        public Park favortiedPark { get; set; }
+        public Park favoritedPark { get; set; }
     }
 }
