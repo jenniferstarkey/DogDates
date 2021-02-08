@@ -43,16 +43,16 @@ namespace DogDates.Controllers
                 return null;
             }
         }
-        [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
+        [HttpDelete("delete")]
+        public IActionResult Delete(ParkFavorites fav)
         {
             var user = GetCurrentUserProfile();
-            var favoriteToDelete = _parkFavoritesRepo.GetFavoriteById(id);
+            var favoriteToDelete = _parkFavoritesRepo.GetFavoriteToDelete(fav);
             if (favoriteToDelete.UserProfileId != user.Id)
             {
                 return Unauthorized();
             }
-            _parkFavoritesRepo.Delete(id);
+            _parkFavoritesRepo.Delete(favoriteToDelete);
             return NoContent();
         }
         private UserProfile GetCurrentUserProfile()
@@ -60,7 +60,7 @@ namespace DogDates.Controllers
             var firebaseUserId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
             return _userRepo.GetByFirebaseUserId(firebaseUserId);
         }
-        [HttpPost("addFavorite/")]
+        [HttpPost("addFavorite")]
         public IActionResult Add(ParkFavorites fav)
         {
             var user = GetCurrentUserProfile();

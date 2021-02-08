@@ -28,6 +28,12 @@ namespace DogDates.Repositories
                 .Where(p => p.Id == id)
                 .FirstOrDefault();
         }
+        public ParkFavorites GetFavoriteToDelete(ParkFavorites fav)
+        {
+            return _context.ParkFavorites
+                .Where(p => p.UserProfileId == fav.UserProfileId && p.ParkId == fav.ParkId)
+                .FirstOrDefault();
+        }
         public UserProfile GetByFirebaseUserId(string firebaseUserId)
         {
             return _context.UserProfile
@@ -45,9 +51,8 @@ namespace DogDates.Repositories
             _context.Add(fav);
             _context.SaveChanges();
         }
-        public void Delete(int id)
+        public void Delete(ParkFavorites favoriteToDelete)
         {
-            var favoriteToDelete = GetFavoriteById(id);
             _context.Remove(favoriteToDelete);
             _context.SaveChanges();
         }

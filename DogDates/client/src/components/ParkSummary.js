@@ -1,11 +1,11 @@
 import React, { useEffect, useState, useContext } from "react";
-import { Card, Button, CardImg, CardBody, CardTitle, CardText } from "reactstrap";
+import { Card, Button, CardImg, CardBody, CardTitle, CardText, Row, Col, Container } from "reactstrap";
 import "./ParkSummary.css"
 import { Link } from "react-router-dom";
 import { UserProfileContext } from "../providers/UserProfileProvider";
 
 
-const ParkSummary = ({ park }) => {
+const ParkSummary = ({ park, setParkAdded, parkAdded }) => {
 
 
     //Get the parks
@@ -17,49 +17,42 @@ const ParkSummary = ({ park }) => {
     const [favorite, setFavorite] = useState([]);
     const { getCurrentUser, getToken } = useContext(UserProfileContext);
 
-    useEffect(() => {
-        fetch(`/api/park`)
-            .then((res) => res.json())
-            .then((parks) => {
-                setParks(parks);
-            });
-    }, []);
-    const addFavorite = (park) => {
+
+    const addFavorite = (favoritePark) => {
+        const user = JSON.parse(localStorage.getItem("userProfile"))
+        const favToAdd = { parkId: favoritePark, userProfileId: user.id };
+
         getToken().then((token) =>
+
             fetch(`api/parkfavorites/addfavorite`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
                     Authorization: `Bearer ${token}`,
                 },
-                body: JSON.stringify(favorite),
-            }).then(parks)
+                body: JSON.stringify(favToAdd),
+            }).then((parks) => setParkAdded(!parkAdded))
         );
+
     };
     const deleteFavorite = (favorite) => {
-        const favToDelete = { id: favorite.id }
+        const user = JSON.parse(localStorage.getItem("userProfile"))
+        const favToDelete = { parkId: favorite, userProfileId: user.id };
+        debugger;
+
         getToken().then((token) =>
-            fetch(`api/parkfavorites/${favorite.id}`, {
+            fetch(`api/parkfavorites/delete`, {
                 method: "DELETE",
                 headers: {
                     "Content-Type": "application/json",
                     Authorization: `Bearer ${token}`,
                 },
-                body: JSON.stringify(favorite),
+                body: JSON.stringify(favToDelete),
             }
             )
         ).then(parks);
     };
-    const checkFavorite = () => {
-        const user = getCurrentUser();
 
-        if (user.id == favorite.userProfileId) {
-            return <button className="secondary_button" color="E2BACD" onClick={(e) => deleteFavorite()}>Remove from favorites</button>
-        }
-        else {
-            return <button className="primary_button" onClick={(e) => addFavorite()}>Favorite</button>
-        }
-    }
 
     return (
         <Card className="summary_card">
@@ -72,11 +65,16 @@ const ParkSummary = ({ park }) => {
                     <p>{park.city}, {park.state}</p>
                 </CardText>
                 <CardText>
-                    <small className="text-muted"> {checkFavorite()}</small>
+                    {/* <small className="text-muted"> {checkFavorite()}</small> */}
+                    {park.isFavorited == true || park.isFavorited == null ?
+                        <button className="secondary_button" color="E2BACD" onClick={(e) => deleteFavorite(park.id)}>Remove from favorites</button> :
+                        <button className="primary_button" onClick={(e) => addFavorite(park.id)}>Favorite</button>
+                    }
                 </CardText>
-
             </CardBody>
+
         </Card >
+
     )
 };
 export default ParkSummary;

@@ -10,6 +10,7 @@ namespace DogDates.Repositories
         bool CheckIfExists(int parkId, int userProfileId);
         void Add(ParkFavorites fav);
         ParkFavorites GetFavoriteById(int id);
-        void Delete(int id);
+        void Delete(ParkFavorites favoriteToDelete);
+        ParkFavorites GetFavoriteToDelete(ParkFavorites fav);
     }
 }
