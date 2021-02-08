@@ -8,26 +8,36 @@ using System.Threading.Tasks;
 
 namespace DogDates.Repositories
 {
-        public class UserProfileRepository : IUserProfileRepository
+    public class UserProfileRepository : IUserProfileRepository
+    {
+        private readonly ApplicationDbContext _context;
+
+        public UserProfileRepository(ApplicationDbContext context)
         {
-            private readonly ApplicationDbContext _context;
-
-            public UserProfileRepository(ApplicationDbContext context)
-            {
-                _context = context;
-            }
-
-            public UserProfile GetByFirebaseUserId(string firebaseUserId)
-            {
-                return _context.UserProfile
-                    //.Include(up => up.UserType)
-                    .FirstOrDefault(up => up.FirebaseId == firebaseUserId);
-            }
-
-            public void Add(UserProfile userProfile)
-            {
-                _context.Add(userProfile);
-                _context.SaveChanges();
-            }
+            _context = context;
         }
+
+        public UserProfile GetByFirebaseUserId(string firebaseUserId)
+        {
+            return _context.UserProfile
+                //.Include(up => up.UserType)
+                .FirstOrDefault(up => up.FirebaseId == firebaseUserId);
+        }
+
+        public void Add(UserProfile userProfile)
+        {
+            _context.Add(userProfile);
+            _context.SaveChanges();
+        }
+        public UserProfile GetByUserId(int id)
+        {
+            return _context.UserProfile
+                .FirstOrDefault(p => p.Id == id);
+        }
+        public void Update(UserProfile userProfile)
+        {
+            _context.Entry(userProfile).State = EntityState.Modified;
+            _context.SaveChanges();
+        }
+    }
  }

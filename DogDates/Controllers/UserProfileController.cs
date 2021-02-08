@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 
@@ -18,7 +19,8 @@ namespace DogDates.Controllers
     public class UserProfileController : ControllerBase
     {
         private readonly IUserProfileRepository _repo;
-        public UserProfileController(IUserProfileRepository repo)
+
+        public UserProfileController( IUserProfileRepository repo)
         {
             _repo = repo;
         }
@@ -39,5 +41,22 @@ namespace DogDates.Controllers
 
                 userProfile);
         }
+        private UserProfile GetCurrentUser()
+        {
+            var firebaseUserId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            return _repo.GetByFirebaseUserId(firebaseUserId);
+        }
+        [HttpPut("{id}")]
+        public IActionResult Update(int id, UserProfile userProfile)
+        {
+            var user = GetCurrentUser();
+            if(userProfile.Id != user.Id)
+            {
+                return Unauthorized();
+            }
+            _repo.Update(userProfile);
+            return NoContent(); 
+        }
+        
     }
 }

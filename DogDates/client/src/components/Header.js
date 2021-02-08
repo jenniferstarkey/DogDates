@@ -30,7 +30,7 @@ const AppHeader = () => {
 
     return (
         <div>
-            <Navbar color="dark" dark expand="sm">
+            <Navbar color="faded" light>
                 <NavbarBrand tag={Link} to="/">
                     <img
                         id="header-logo"
@@ -38,9 +38,14 @@ const AppHeader = () => {
                         width="30"
                         height="30"
                         className="mr-1"
-                        alt="Quill Logo"
+                        alt="DogDates Logo"
                     />
                 </NavbarBrand>
+                {user ? (
+                    <NavbarText className="d-sm-none d-md-block">
+                        Hey there, {user.displayName}
+                    </NavbarText>
+                ) : null}
                 <NavbarToggler onClick={toggle} />
                 <Collapse isOpen={isOpen} navbar>
                     <Nav className="mr-auto" navbar>
@@ -51,30 +56,13 @@ const AppHeader = () => {
                                         Explore
                         </NavLink>
                                 </NavItem>
+
                                 <NavItem>
-                                    <NavLink to="/post/add" tag={Link}>
-                                        {/* New Post */}
-                                    </NavLink>
-                                </NavItem>
-                                <NavItem>
-                                    <NavLink to="/myposts" tag={Link}>
-                                        {/* My Post */}
-                                    </NavLink>
-                                </NavItem>
-                                {isAdmin() && (
-                                    <NavItem>
-                                        <NavLink to="/categories" tag={Link}>
-                                            {/* Categories */}
+                                    <NavLink to="/myAccount" tag={Link}>
+                                        My Account
                                         </NavLink>
-                                    </NavItem>
-                                )}
-                                {isAdmin() && (
-                                    <NavItem>
-                                        <NavLink to="/tags" tag={Link}>
-                                            {/* Tags */}
-                                        </NavLink>
-                                    </NavItem>
-                                )}
+                                </NavItem>
+
                                 <NavItem>
                                     <NavLink onClick={logoutAndReturn}>Logout</NavLink>
                                 </NavItem>
@@ -94,11 +82,7 @@ const AppHeader = () => {
                                 </>
                             )}
                     </Nav>
-                    {user ? (
-                        <NavbarText className="d-sm-none d-md-block">
-                            Welcome {user.displayName}
-                        </NavbarText>
-                    ) : null}
+
                 </Collapse>
             </Navbar>
         </div>
