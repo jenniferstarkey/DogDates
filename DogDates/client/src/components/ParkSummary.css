@@ -4,7 +4,19 @@
     height: 100%;
 }
 @media only screen and (max-width: 992px) {
-    .post-summary__img {
+    .park__img {
       min-height: 300px;
     }
+}
+.summary_card{
+  padding: 5%;
+  padding-bottom: 1px;
+  margin: 5%;
+}
+.primary_button{
+
+}
+.secondary_button{
+  background-color: #E2BACD;
+  border-radius: 8px;
 }

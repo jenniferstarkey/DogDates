@@ -1,5 +1,6 @@
 import React from "react";
 import ParkSummary from "./ParkSummary";
+import "./ParkList.css"
 
 const ParkList = ({ parks }) => {
     return (

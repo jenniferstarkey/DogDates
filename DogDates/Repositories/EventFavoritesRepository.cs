@@ -8,24 +8,24 @@ using System.Threading.Tasks;
 
 namespace DogDates.Repositories
 {
-    public class ParkFavoritesRepository : IParkFavoritesRepository
+    public class EventFavoritesRepository : IEventFavoritesRepository
     {
         private ApplicationDbContext _context;
-        public ParkFavoritesRepository(ApplicationDbContext context)
+        public EventFavoritesRepository(ApplicationDbContext context)
         {
             _context = context;
         }
-        public List<ParkFavorites> GetByUserId(int userId)
+        public List<EventFavorites> GetByUserId(int userId)
         {
-            return _context.ParkFavorites
-                .Where(p => p.UserProfileId == userId)
-                .Include(p => p.favoritedPark)
+            return _context.EventFavorites
+                .Where(e => e.UserProfileId == userId)
+                .Include(e => e.favoritedEvent)
                 .ToList();
         }
-        public ParkFavorites GetFavoriteById(int id)
+        public EventFavorites GetFavoriteById(int id)
         {
-            return _context.ParkFavorites
-                .Where(p => p.Id == id)
+            return _context.EventFavorites
+                .Where(e => e.Id == id)
                 .FirstOrDefault();
         }
         public UserProfile GetByFirebaseUserId(string firebaseUserId)
@@ -33,14 +33,13 @@ namespace DogDates.Repositories
             return _context.UserProfile
                .FirstOrDefault(up => up.FirebaseId == firebaseUserId);
         }
-        //public void Add(ParkFavorites parkFavorites)
 
-        public bool CheckIfExists(int parkId, int userProfileId)
+        public bool CheckIfExists(int eventId, int userProfileId)
         {
-            return _context.ParkFavorites
-                .Any(p => p.ParkId == parkId && p.UserProfileId == userProfileId);
+            return _context.EventFavorites
+                .Any(e => e.EventId == eventId && e.UserProfileId == userProfileId);
         }
-        public void Add(ParkFavorites fav)
+        public void Add(EventFavorites fav)
         {
             _context.Add(fav);
             _context.SaveChanges();

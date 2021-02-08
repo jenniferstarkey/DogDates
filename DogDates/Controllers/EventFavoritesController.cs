@@ -1,6 +1,5 @@
 ﻿using DogDates.Models;
 using DogDates.Repositories;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -9,31 +8,30 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
-namespace DogDates.Controllers
+namespace Tabloid_Fullstack.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
-    public class ParkFavoritesController : ControllerBase
+    public class EventFavoritesController : ControllerBase
     {
-        private IParkFavoritesRepository _parkFavoritesRepo;
+        private IEventFavoritesRepository _eventFavoritesRepo;
         private IUserProfileRepository _userRepo;
-    public ParkFavoritesController(IParkFavoritesRepository parkFavoritesRepo, IUserProfileRepository userRepo)
-    {
-        _parkFavoritesRepo = parkFavoritesRepo;
-        _userRepo = userRepo;
-    }
-        
+        public EventFavoritesController(IEventFavoritesRepository eventFavoritesRepo, IUserProfileRepository userRepo)
+        {
+            _eventFavoritesRepo = eventFavoritesRepo;
+            _userRepo = userRepo;
+        }
+
         [HttpGet("{userId}")]
 
         public IActionResult GetById(int userId)
         {
             var user = GetCurrentUserProfile();
-            if(user.Id != userId)
+            if (user.Id != userId)
             {
                 return null;
             }
-            List<ParkFavorites> favs = _parkFavoritesRepo.GetByUserId(userId);
+            List<EventFavorites> favs = _eventFavoritesRepo.GetByUserId(userId);
             if (favs != null)
             {
                 return Ok(favs);
@@ -47,12 +45,12 @@ namespace DogDates.Controllers
         public IActionResult Delete(int id)
         {
             var user = GetCurrentUserProfile();
-            var favoriteToDelete = _parkFavoritesRepo.GetFavoriteById(id);
+            var favoriteToDelete = _eventFavoritesRepo.GetFavoriteById(id);
             if (favoriteToDelete.UserProfileId != user.Id)
             {
                 return Unauthorized();
             }
-            _parkFavoritesRepo.Delete(id);
+            _eventFavoritesRepo.Delete(id);
             return NoContent();
         }
         private UserProfile GetCurrentUserProfile()
@@ -60,12 +58,12 @@ namespace DogDates.Controllers
             var firebaseUserId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
             return _userRepo.GetByFirebaseUserId(firebaseUserId);
         }
-        [HttpPost("addFavorite/")]
-        public IActionResult Add(ParkFavorites fav)
+        [HttpPost("addFavorite")]
+        public IActionResult Add(EventFavorites fav)
         {
             var user = GetCurrentUserProfile();
             fav.UserProfileId = user.Id;
-            _parkFavoritesRepo.Add(fav);
+            _eventFavoritesRepo.Add(fav);
             return Ok(fav);
         }
     }

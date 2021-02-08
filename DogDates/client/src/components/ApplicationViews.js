@@ -26,9 +26,9 @@ const ApplicationViews = () => {
             <Route path="/event/:eventId(\d+)" >
                 {isLoggedIn ? <EventDetails /> : <Redirect to="/login" />}
             </Route>
-            {/* <Route path="/myAccount" >
+            <Route path="/myAccount" >
                 {isLoggedIn ? <MyAccount /> : <Redirect to="/login" />}
-            </Route> */}
+            </Route>
 
             <Route path="/login">
                 <Login />

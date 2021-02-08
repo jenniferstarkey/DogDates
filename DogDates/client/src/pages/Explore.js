@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import ParkList from "../components/ParkList";
 import { UserProfileContext } from "../providers/UserProfileProvider";
+import "./Explore.css"
 
 
 const Explore = () => {

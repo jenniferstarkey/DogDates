@@ -94,6 +94,7 @@ export function UserProfileProvider(props) {
         return user !== null && user.userTypeId === adminTypeId;
     };
 
+
     return (
         <UserProfileContext.Provider
             value={{

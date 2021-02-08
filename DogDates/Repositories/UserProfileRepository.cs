@@ -34,5 +34,10 @@ namespace DogDates.Repositories
             return _context.UserProfile
                 .FirstOrDefault(p => p.Id == id);
         }
+        public void Update(UserProfile userProfile)
+        {
+            _context.Entry(userProfile).State = EntityState.Modified;
+            _context.SaveChanges();
+        }
     }
  }

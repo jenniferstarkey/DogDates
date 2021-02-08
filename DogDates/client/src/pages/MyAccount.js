@@ -4,7 +4,7 @@ import AccountInfo from "../components/AccountInfoCard";
 const MyAccount = () => {
     return (
         <div>
-            {/* <AccountInfo /> */}
+            <AccountInfo />
         </div>
     )
 }
