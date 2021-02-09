@@ -7,9 +7,10 @@ namespace DogDates.Repositories
     {
         void Add(EventFavorites fav);
         bool CheckIfExists(int eventId, int userProfileId);
-        void Delete(int id);
+        void Delete(EventFavorites favoriteToDelete);
         UserProfile GetByFirebaseUserId(string firebaseUserId);
-        List<EventFavorites> GetByUserId(int userId);
+        List<Event> GetByUserId(int userId);
         EventFavorites GetFavoriteById(int id);
+        EventFavorites GetFavoriteToDelete(EventFavorites fav);
     }
 }

@@ -4,7 +4,7 @@ import { Button, Input, Container, Col, Row } from "reactstrap";
 import { Link } from "react-router-dom";
 import { UserProfileContext } from "../providers/UserProfileProvider";
 import "./Login.css";
-import { toast } from 'react-toastify';
+import { toast } from "react-toastify";
 import "toastify-js/src/toastify.css";
 
 
@@ -21,7 +21,18 @@ const Login = () => {
         login(email, password)
             .then((user) => {
                 setLoading(false);
-                toast.info(`Welcome back ${user.displayName}`);
+                toast(`Welcome back ${user.displayName}`,
+
+                    {
+                        position: "bottom-right",
+                        autoClose: 5000,
+                        hideProgressBar: true,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                    }
+                );
                 history.push("/");
             })
             .catch((err) => {
@@ -29,6 +40,7 @@ const Login = () => {
                 toast.error("Invalid email or password");
             });
     };
+
 
     return (
         <Container>

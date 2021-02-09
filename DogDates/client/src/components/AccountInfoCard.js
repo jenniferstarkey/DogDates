@@ -1,5 +1,5 @@
-import React, { useContext, useState, useEffect } from "react";
-import { toast } from "react-toastify";
+import React, { useContext, useState } from "react";
+import Toastify from 'toastify-js'
 import { Card, Row, Col, CardImg, CardText, Button, Form, Input, CardBody, ButtonGroup, FormGroup, Label } from "reactstrap";
 
 import { UserProfileContext } from "../providers/UserProfileProvider";
@@ -41,7 +41,7 @@ const AccountInfo = (props) => {
     }
     const updateAccount = () => {
         const user = getCurrentUser();
-        // const accountToEdit = { id: user.id }
+        const accountToEdit = { id: user.id }
         getToken()
             .then((token) =>
                 fetch(`/api/userprofile/${user.id}`, {
@@ -50,7 +50,7 @@ const AccountInfo = (props) => {
                         "Content-Type": "application/json",
                         Authorization: `Bearer ${token}`,
                     },
-                    body: JSON.stringify()
+                    body: JSON.stringify(accountToEdit)
                 }))
             .then(() => {
                 setIsEditing(false);

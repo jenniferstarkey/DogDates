@@ -20,6 +20,7 @@ const Register = () => {
     const [profileImage, setProfileImage] = useState("");
     const [confirm, setConfirm] = useState("");
     const history = useHistory();
+    const [imageSelected, setImageSelected] = useState()
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -52,6 +53,18 @@ const Register = () => {
                 //toast.error("Invalid email");
             });
     };
+    const uploadImage = () => {
+        const formData = new FormData()
+        formData.append("file", imageSelected)
+        formData.append("upload_preset", "b94rzefr")
+        fetch("https://api.cloudinary.com/v1_1/dogdates/image/upload", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(formData)
+        }).then((res) => { console.log(res) })
+    }
 
     return (
         <div className="login-form">
@@ -142,12 +155,13 @@ const Register = () => {
                 </div>
                 <div className="form-group">
                     <Input
-                        onChange={(e) => setProfileImage(e.target.value)}
-                        type="text"
+                        // onChange={(e) => setProfileImage(e.target.value)}
+                        type="file"
                         className="form-control"
                         name="profileImage"
                         placeholder="Profile Image"
                         required="required"
+                        onChange={(e) => { uploadImage(e.target.files) }}
                     />
                 </div>
                 <div className="form-group">
@@ -171,7 +185,7 @@ const Register = () => {
                     />
                 </div>
                 <div className="form-group">
-                    <Button type="submit" block color="danger" disabled={loading}>
+                    <Button type="submit" block color="danger" disabled={loading} onClick={(e) => { setImageSelected(e.target.files) }}>
                         Sign Up
           </Button>
                 </div>

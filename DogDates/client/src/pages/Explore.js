@@ -7,13 +7,17 @@ import "./Explore.css"
 const Explore = () => {
     const [parks, setParks] = useState([]);
     const [parkAdded, setParkAdded] = useState(false);
-
+    const [deletedPark, setDeletedPark] = useState(false);
+    const [isToggled, setToggled] = useState(false);
     const { getCurrentUser, getToken } = useContext(UserProfileContext);
+    const toggleTrueFalse = () => setToggled(!isToggled);
+
     useEffect(() => {
         getToken().then((token) => {
             return getParks(token);
         })
-    }, [parkAdded]);
+    }, [parkAdded, deletedPark]);
+
     const getParks = (token) => {
         return fetch(`/api/park`, {
             method: "GET",
@@ -26,7 +30,12 @@ const Explore = () => {
     return (
         <div className="park_explore">
             <h2>Explore Parks</h2>
-            <ParkList parks={parks} setParkAdded={setParkAdded} parkAdded={parkAdded} />
+            <label className="switch">
+                <input type="checkbox" />
+                <span class="slider round"></span>
+            </label>
+
+            <ParkList parks={parks} setParkAdded={setParkAdded} parkAdded={parkAdded} setDeletedPark={setDeletedPark} deletedPark={deletedPark} />
         </div>
     )
 

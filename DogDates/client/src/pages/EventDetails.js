@@ -15,27 +15,70 @@ import {
     ModalFooter, ModalHeader
 } from "reactstrap";
 
-const EventDetails = (event) => {
+const EventDetails = () => {
     const { getCurrentUser, getToken } = useContext(UserProfileContext);
+    const [events, setEvents] = useState([]);
     const [theEvent, setTheEvent] = useState([]);
     const { eventId } = useParams();
     const [pendingDelete, setPendingDelete] = useState(false);
     const [isEditing, setIsEditing] = useState(false);
     const history = useHistory();
 
+    const addSavedEvent = (savedEvent) => {
+        const user = JSON.parse(localStorage.getItem("userProfile"))
+        const eventToSave = { eventId: savedEvent, userProfileId: user.id };
+
+        getToken().then((token) =>
+            fetch(`/api/eventfavorites/addfavorite`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`,
+                },
+                body: JSON.stringify(eventToSave),
+            }).then(events)
+        );
+
+    };
+    const deleteSavedEvent = (event) => {
+        const user = JSON.parse(localStorage.getItem("userProfile"))
+        const eventToDelete = { eventId: event, userProfileId: user.id };
+        console.log(eventToDelete)
+
+        getToken().then((token) =>
+            fetch(`/api/eventfavorites/delete`, {
+                method: "DELETE",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`,
+                },
+                body: JSON.stringify(eventToDelete),
+            }
+
+            ).then(events)
+
+        );
+    };
 
 
     useEffect(() => {
-        fetch(`/api/event/${eventId}`)
-            .then((res) => {
-                if (res === 404) {
-                    toast.error("Whoops, we cant find that event");
-                    return;
-                }
-                return res.json();
+        getToken().then((token) =>
+            fetch(`/api/event/${eventId}`, {
+                method: "GET",
+                headers: {
+                    "Authorization": `Bearer ${token}`,
+                },
             })
+                .then((res) => {
+                    if (res === 404) {
+                        toast.error("Whoops, we cant find that event");
+                        return;
+                    }
+                    return res.json();
+                }))
             .then((theEvent) => {
                 setTheEvent(theEvent);
+                console.log(theEvent)
             });
     }, []);
     const handleChange = (e) => {
@@ -153,9 +196,14 @@ const EventDetails = (event) => {
                                         className="park-details__avatar rounded-circle"
                                     />
                                 </div>
-                            </div>
+                                <div>
+                                </div>{theEvent.isFavorited == true || theEvent.isFavorited == null ?
+                                    <button className="secondary_button" color="E2BACD" onClick={(e) => deleteSavedEvent(theEvent.id)}>Remove from saved events</button> :
+                                    <button className="primary_button" onClick={(e) => addSavedEvent(theEvent.id)}>Save Event</button>
+                                }
                                 <EditButton />
                                 <DeleteButton />
+                            </div>
                             </>
                         )}
                     <Modal isOpen={pendingDelete}>

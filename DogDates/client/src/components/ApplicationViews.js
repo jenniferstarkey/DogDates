@@ -6,7 +6,7 @@ import Register from "../pages/Register";
 import Explore from "../pages/Explore";
 import ParkDetails from "../pages/ParkDetails";
 import EventDetails from "../pages/EventDetails";
-import ParkFavorites from "./ParkFavorites";
+import Home from "../pages/Home";
 import MyAccount from "../pages/MyAccount";
 
 const ApplicationViews = () => {
@@ -15,7 +15,7 @@ const ApplicationViews = () => {
     return (
         <Switch>
             <Route path="/" exact>
-                {isLoggedIn ? <ParkFavorites /> : <Redirect to="/login" />}
+                {isLoggedIn ? <Home /> : <Redirect to="/login" />}
             </Route>
             <Route path="/explore" exact>
                 {isLoggedIn ? <Explore /> : <Redirect to="/login" />}

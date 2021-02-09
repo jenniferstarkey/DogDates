@@ -17,15 +17,19 @@ namespace DogDates.Controllers
     {
         private IEventRepository _eventRepo;
         private readonly IUserProfileRepository _userRepo;
-        public EventController(IEventRepository eventRepo, IUserProfileRepository userRepo)
+        private readonly IEventFavoritesRepository _eventFavRepo;
+        public EventController(IEventRepository eventRepo, IUserProfileRepository userRepo, IEventFavoritesRepository eventFavRepo)
         {
             _eventRepo = eventRepo;
             _userRepo = userRepo;
+            _eventFavRepo = eventFavRepo;
         }
         [HttpGet("{eventId}")]
         public IActionResult GetById(int eventId)
         {
             var events = _eventRepo.GetEventById(eventId);
+            var user = GetCurrentUser();
+            events.IsFavorited = _eventFavRepo.CheckIfExists(events.Id, user.Id);
             return Ok(events);
         }
         private UserProfile GetCurrentUser()

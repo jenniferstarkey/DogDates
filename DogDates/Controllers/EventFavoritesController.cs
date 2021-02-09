@@ -1,5 +1,6 @@
 ﻿using DogDates.Models;
 using DogDates.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -7,11 +8,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using DogDates.ViewModels;
 
-namespace Tabloid_Fullstack.Controllers
+namespace DogDates.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class EventFavoritesController : ControllerBase
     {
         private IEventFavoritesRepository _eventFavoritesRepo;
@@ -27,30 +30,26 @@ namespace Tabloid_Fullstack.Controllers
         public IActionResult GetById(int userId)
         {
             var user = GetCurrentUserProfile();
+
             if (user.Id != userId)
             {
                 return null;
             }
-            List<EventFavorites> favs = _eventFavoritesRepo.GetByUserId(userId);
-            if (favs != null)
-            {
-                return Ok(favs);
-            }
-            else
-            {
-                return null;
-            }
+            List<Event> favs = _eventFavoritesRepo.GetByUserId(userId);
+          
+            return Ok(favs);
         }
-        [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
+
+        [HttpDelete("delete")]
+        public IActionResult Delete(EventFavorites fav)
         {
             var user = GetCurrentUserProfile();
-            var favoriteToDelete = _eventFavoritesRepo.GetFavoriteById(id);
+            var favoriteToDelete = _eventFavoritesRepo.GetFavoriteToDelete(fav);
             if (favoriteToDelete.UserProfileId != user.Id)
             {
                 return Unauthorized();
             }
-            _eventFavoritesRepo.Delete(id);
+            _eventFavoritesRepo.Delete(favoriteToDelete);
             return NoContent();
         }
         private UserProfile GetCurrentUserProfile()
