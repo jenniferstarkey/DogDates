@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import { UserProfileContext } from "../providers/UserProfileProvider";
 
 
-const ParkSummary = ({ park, setParkAdded, parkAdded }) => {
+const ParkSummary = ({ park, setParkAdded, parkAdded, deletedPark, setDeletedPark }) => {
 
 
     //Get the parks
@@ -38,8 +38,6 @@ const ParkSummary = ({ park, setParkAdded, parkAdded }) => {
     const deleteFavorite = (favorite) => {
         const user = JSON.parse(localStorage.getItem("userProfile"))
         const favToDelete = { parkId: favorite, userProfileId: user.id };
-        debugger;
-
         getToken().then((token) =>
             fetch(`api/parkfavorites/delete`, {
                 method: "DELETE",
@@ -49,8 +47,10 @@ const ParkSummary = ({ park, setParkAdded, parkAdded }) => {
                 },
                 body: JSON.stringify(favToDelete),
             }
-            )
-        ).then(parks);
+
+            ).then((parks) => setDeletedPark(!deletedPark))
+
+        );
     };
 
 
@@ -58,14 +58,14 @@ const ParkSummary = ({ park, setParkAdded, parkAdded }) => {
         <Card className="summary_card">
             <CardImg top width="100%" src={`${park.parkImage})`} alt="Park Image" />
             <CardBody>
-                <CardTitle tag="h5" link to={`/park/${park.id}`}>
+                <CardTitle tag="h5"> <Link to={`/park/${park.id}`}>
                     {park.name}
+                </Link>
                 </CardTitle>
                 <CardText>
                     <p>{park.city}, {park.state}</p>
                 </CardText>
                 <CardText>
-                    {/* <small className="text-muted"> {checkFavorite()}</small> */}
                     {park.isFavorited == true || park.isFavorited == null ?
                         <button className="secondary_button" color="E2BACD" onClick={(e) => deleteFavorite(park.id)}>Remove from favorites</button> :
                         <button className="primary_button" onClick={(e) => addFavorite(park.id)}>Favorite</button>

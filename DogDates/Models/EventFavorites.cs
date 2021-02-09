@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using DogDates.ViewModels;
 
 namespace DogDates.Models
 {
@@ -10,7 +11,7 @@ namespace DogDates.Models
         public int Id { get; set; }
         public int UserProfileId { get; set; }
         public int EventId { get; set; }
-        public UserProfile userProfile { get; set; }
-        public Event favoritedEvent { get; set; }
+        public UserProfile UserProfile { get; set; }
+        public Event Event { get; set; }
     }
 }

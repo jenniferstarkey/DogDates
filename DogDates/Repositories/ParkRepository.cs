@@ -20,8 +20,28 @@ namespace DogDates.Repositories
         }
 
         //Get all the parks for the lists. Should only include name of park, image, location
-        public List<ParkFavorite> Get()
+        public List<ParkFavorite> Get(string city)
         {
+            if( city != null)
+            {
+                return _context.Park
+                .Where(p => p.City == city)
+                .Select(p => new ParkFavorite()
+                {
+                    Id = p.Id,
+                    Name = p.Name,
+                    Street = p.Street,
+                    City = p.City,
+                    State = p.State,
+                    ZipCode = p.ZipCode,
+                    ParkImage = p.ParkImage,
+
+                })
+                .ToList();
+            }
+            else
+            {
+
             return _context.Park
                 .Select( p => new ParkFavorite()
                 {
@@ -35,6 +55,7 @@ namespace DogDates.Repositories
 
                 })
                 .ToList();
+            }
         }
         public Park GetParkById(int id)
         {

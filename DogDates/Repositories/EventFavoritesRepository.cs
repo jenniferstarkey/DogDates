@@ -15,17 +15,24 @@ namespace DogDates.Repositories
         {
             _context = context;
         }
-        public List<EventFavorites> GetByUserId(int userId)
+        public List<Event> GetByUserId(int userId)
         {
             return _context.EventFavorites
                 .Where(e => e.UserProfileId == userId)
-                .Include(e => e.favoritedEvent)
+                .Include(e => e.Event)
+                .Select(e => e.Event)
                 .ToList();
         }
         public EventFavorites GetFavoriteById(int id)
         {
             return _context.EventFavorites
                 .Where(e => e.Id == id)
+                .FirstOrDefault();
+        }
+        public EventFavorites GetFavoriteToDelete(EventFavorites fav)
+        {
+            return _context.EventFavorites
+                .Where(e => e.UserProfileId == fav.UserProfileId && e.EventId == fav.EventId)
                 .FirstOrDefault();
         }
         public UserProfile GetByFirebaseUserId(string firebaseUserId)
@@ -44,9 +51,8 @@ namespace DogDates.Repositories
             _context.Add(fav);
             _context.SaveChanges();
         }
-        public void Delete(int id)
+        public void Delete(EventFavorites favoriteToDelete)
         {
-            var favoriteToDelete = GetFavoriteById(id);
             _context.Remove(favoriteToDelete);
             _context.SaveChanges();
         }

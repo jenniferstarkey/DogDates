@@ -7,7 +7,7 @@ const ParkList = (props) => {
         <div>
             {props.parks.map((park) => (
                 <div key={park.id}>
-                    <ParkSummary setParkAdded={props.setParkAdded} parkAdded={props.parkAdded} park={park} />
+                    <ParkSummary setDeletedPark={props.setDeletedPark} deletedPark={props.deletedPark} setParkAdded={props.setParkAdded} parkAdded={props.parkAdded} park={park} />
                 </div>
             ))}
         </div>

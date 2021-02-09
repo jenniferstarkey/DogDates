@@ -1,15 +1,39 @@
 import React, { useContext, useState, useEffect } from "react";
-import { toast } from "react-toastify";
+import Toastify from 'toastify-js'
 import { Card, Row, Col, CardImg, CardText, Button, Form, Input, CardBody, ButtonGroup, FormGroup, Label } from "reactstrap";
-
 import { UserProfileContext } from "../providers/UserProfileProvider";
+import { useParams } from "react-router-dom";
 
 
 const AccountInfo = (props) => {
     const { getCurrentUser, getToken } = useContext(UserProfileContext);
-    const [userProfile, setUserProfile] = useState([]);
+    let [userProfile, setUserProfile] = useState([]);
     const [isEditing, setIsEditing] = useState(false);
     const user = getCurrentUser();
+    const [loading, setLoading] = useState(false);
+    const [image, setImage] = useState("");
+
+    const uploadImage = async e => {
+        const files = e.target.files
+        const data = new FormData()
+        data.append('file', files[0])
+        data.append('upload_preset', 'b94rzefr')
+        setLoading(true)
+
+        const res = await fetch("https://api.cloudinary.com/v1_1/dogdates/image/upload",
+            {
+                method: "POST",
+                body: data
+            })
+        const file = await res.json()
+        setImage(file.secure_url)
+        setLoading(false)
+        console.log(file)
+    }
+    useEffect(() => {
+        setUserProfile(user);
+    }, []);
+
 
     const handleChange = (e) => {
         const stateToChange = { ...userProfile }
@@ -41,7 +65,7 @@ const AccountInfo = (props) => {
     }
     const updateAccount = () => {
         const user = getCurrentUser();
-        // const accountToEdit = { id: user.id }
+        userProfile.profileImage = image;
         getToken()
             .then((token) =>
                 fetch(`/api/userprofile/${user.id}`, {
@@ -50,9 +74,10 @@ const AccountInfo = (props) => {
                         "Content-Type": "application/json",
                         Authorization: `Bearer ${token}`,
                     },
-                    body: JSON.stringify()
+                    body: JSON.stringify(userProfile)
                 }))
             .then(() => {
+                console.log(userProfile)
                 setIsEditing(false);
             })
     }
@@ -69,8 +94,8 @@ const AccountInfo = (props) => {
                                     <Form className="w-100">
                                         <FormGroup>
                                             <Label for="profileImage">Profile Image</Label>
-                                            <Input size="sm" onChange={(e) => handleChange(e)}
-                                                defaultValue={user.profileImage} id="profileImage" value={userProfile.profileImage} />
+                                            <Input type="file" name="file" onChange={uploadImage}
+                                                id="profileImage" />
                                         </FormGroup>
                                         <FormGroup>
                                             <Label for="displayName">Display Name</Label>

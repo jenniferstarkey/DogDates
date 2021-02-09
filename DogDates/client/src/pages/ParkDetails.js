@@ -1,15 +1,17 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, Component } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { Jumbotron, Button } from "reactstrap";
 import EventCard from "../components/EventCard"
 import { EventForm } from "../components/EventForm";
-
+import StarRating from "../components/StarRating";
+import Paws from "../components/Stars";
 
 const ParkDetails = () => {
     const { parkId } = useParams();
     const [park, setPark] = useState([]);
     const [event, setEvent] = useState([]);
+    // const { getCurrentUser } = useState(UserProfileContext);
     const history = useHistory();
 
     useEffect(() => {
@@ -26,7 +28,6 @@ const ParkDetails = () => {
             })
     }, []);
 
-
     if (event == undefined) {
         return null
     }
@@ -35,6 +36,12 @@ const ParkDetails = () => {
             <Button onClick={() => {
                 history.goBack()
             }}>Go Back</Button>
+            <Paws />
+            {/* <div className="actions">
+                <button type="submit" onClick={this.saveRating}>
+                    Submit Rating
+                </button>
+            </div> */}
             <Jumbotron style={{ backgroundImage: `url('${park.parkImage}')` }}>
             </Jumbotron>
             <div className="container">

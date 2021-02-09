@@ -1,4 +1,5 @@
 ﻿using DogDates.Models;
+using DogDates.ViewModels;
 using System.Collections.Generic;
 
 namespace DogDates.Repositories
@@ -7,7 +8,7 @@ namespace DogDates.Repositories
     {
         List<Event> GetById(int parkId);
         UserProfile GetByFirebaseUserId(string firebaseUserId);
-        Event GetEventById(int id);
+        EventFavorite GetEventById(int id);
         public void Delete(int id);
         void Update(Event taco);
         void Add(Comment comment);

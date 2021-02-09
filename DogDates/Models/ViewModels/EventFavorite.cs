@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Tabloid_Fullstack.Models.ViewModels
+namespace DogDates.ViewModels
 {
     public class EventFavorite
     {

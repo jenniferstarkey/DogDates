@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using DogDates.ViewModels;
 
 namespace DogDates.Repositories
 {
@@ -14,6 +15,22 @@ namespace DogDates.Repositories
         public EventRepository(ApplicationDbContext context)
         {
             _context = context;
+        }
+        public List<EventFavorite> Get()
+        {
+            return _context.Event
+                .Select(e => new EventFavorite()
+                {
+                    Id = e.Id,
+                    UserProfileId = e.UserProfileId,
+                    Title = e.Title,
+                    Details = e.Details,
+                    EventDateTime = e.EventDateTime,
+                    ParkId = e.ParkId,
+                    CreatedDateTime = e.CreatedDateTime
+
+                })
+                .ToList();
         }
         public UserProfile GetByFirebaseUserId(string firebaseUserId)
         {
@@ -27,13 +44,24 @@ namespace DogDates.Repositories
                 .Where(e => e.ParkId == parkId)
                 .ToList();
         }
-        public Event GetEventById(int id)
+        public EventFavorite GetEventById(int id)
         {
             return _context.Event
                 .Include(e => e.UserProfile)
                 .Include(e => e.Comments)
                 .ThenInclude(c => c.userProfile)
                 .Where(e => e.Id == id)
+                .Select(e => new EventFavorite
+                {
+                    Id = e.Id,
+                    UserProfile = e.UserProfile,
+                    Title = e.Title,
+                    Details = e.Details,
+                    EventDateTime = e.EventDateTime,
+                    ParkId = e.ParkId,
+                    CreatedDateTime = e.CreatedDateTime,
+                    Comments = e.Comments,
+                })
                 .FirstOrDefault();
         }
         public void Delete(int id)
