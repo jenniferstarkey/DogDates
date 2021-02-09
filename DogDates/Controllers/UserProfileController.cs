@@ -50,11 +50,21 @@ namespace DogDates.Controllers
         public IActionResult Update(int id, UserProfile userProfile)
         {
             var user = GetCurrentUser();
-            if(userProfile.Id != user.Id)
+            user.Id = userProfile.Id;
+            user.FirstName = userProfile.FirstName;
+            user.LastName = userProfile.LastName;
+            user.DisplayName = userProfile.DisplayName;
+            user.Email = userProfile.Email;
+            user.City = userProfile.City;
+            user.State = userProfile.State;
+            user.ZipCode = userProfile.ZipCode;
+            user.ProfileImage = userProfile.ProfileImage;
+            user.Bio = userProfile.Bio;
+            if(id != user.Id)
             {
                 return Unauthorized();
             }
-            _repo.Update(userProfile);
+            _repo.Update(user);
             return NoContent(); 
         }
         

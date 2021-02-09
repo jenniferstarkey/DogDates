@@ -6,7 +6,7 @@ namespace DogDates.Repositories
 {
     public interface IParkRepository
     {
-        List<ParkFavorite> Get();
+        List<ParkFavorite> Get(string city);
         public Park GetParkById(int id);
         UserProfile GetByFirebaseUserId(string firebaseUserId);
         void Add(Event taco);

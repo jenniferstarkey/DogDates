@@ -16,30 +16,32 @@ const Explore = () => {
         getToken().then((token) => {
             return getParks(token);
         })
-    }, [parkAdded, deletedPark]);
+    }, [parkAdded, deletedPark, isToggled]);
 
     const getParks = (token) => {
-        return fetch(`/api/park`, {
+        return fetch(`/api/park?q=${isToggled}`, {
             method: "GET",
             headers: {
                 Authorization: `Bearer ${token}`,
             },
         }).then((res) => res.json().then((p) => setParks(p)))
     }
+    const toggler = () => {
+        isToggled ? setToggled(false) : setToggled(true)
+    }
 
     return (
         <div className="park_explore">
             <h2>Explore Parks</h2>
+
             <label className="switch">
-                <input type="checkbox" />
-                <span class="slider round"></span>
+                <input type="checkbox" onClick={toggler} />
+                <span class="slider round"
+                ></span>
             </label>
 
             <ParkList parks={parks} setParkAdded={setParkAdded} parkAdded={parkAdded} setDeletedPark={setDeletedPark} deletedPark={deletedPark} />
         </div>
     )
-
-
-
 };
 export default Explore;

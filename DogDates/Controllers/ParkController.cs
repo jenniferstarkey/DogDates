@@ -27,10 +27,18 @@ namespace DogDates.Controllers
             _parkFavRepo = parkFavRepo;
     }
         [HttpGet]
-        public IActionResult Get()
+        public IActionResult Get(bool q)
         {
             var user = GetCurrentUser();
-            var parks = _repo.Get();
+            var parks = new List<ParkFavorite>();
+            if( q == true) {
+               parks = _repo.Get(user.City);
+            }
+            else
+            {
+            parks = _repo.Get(null);
+
+            }
             foreach (ParkFavorite parkFavorite in parks)
             {
                 parkFavorite.IsFavorited = _parkFavRepo.CheckIfExists(parkFavorite.Id, user.Id);
