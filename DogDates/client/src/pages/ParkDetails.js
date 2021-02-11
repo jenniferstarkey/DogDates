@@ -5,8 +5,7 @@ import { Jumbotron, Button } from "reactstrap";
 import EventCard from "../components/EventCard"
 import { EventForm } from "../components/EventForm";
 import StarRating from "../components/StarRating";
-import Paws from "../components/Stars";
-
+import Rating from "../components/StarRating";
 const ParkDetails = () => {
     const { parkId } = useParams();
     const [park, setPark] = useState([]);
@@ -36,7 +35,8 @@ const ParkDetails = () => {
             <Button onClick={() => {
                 history.goBack()
             }}>Go Back</Button>
-            <Paws />
+
+            <Rating />
             {/* <div className="actions">
                 <button type="submit" onClick={this.saveRating}>
                     Submit Rating

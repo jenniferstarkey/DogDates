@@ -10,8 +10,6 @@ namespace DogDates.Repositories
         public Park GetParkById(int id);
         UserProfile GetByFirebaseUserId(string firebaseUserId);
         void Add(Event taco);
-
-      
-       
-    }
+/*        List<ParkReviewCount> GetParkReviewsCount(int parkId);
+*/    }
 }

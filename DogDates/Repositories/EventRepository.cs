@@ -67,6 +67,11 @@ namespace DogDates.Repositories
         public void Delete(int id)
         {
             var eventToDelete = GetEventById(id);
+            var comments = eventToDelete.Comments;
+            foreach (Comment comment in comments)
+            {
+                _context.Comment.Remove(comment);
+            }
                 _context.Remove(eventToDelete);
                 _context.SaveChanges();
         }

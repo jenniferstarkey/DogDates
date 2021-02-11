@@ -43,16 +43,36 @@ namespace DogDates.Controllers
             {
                 parkFavorite.IsFavorited = _parkFavRepo.CheckIfExists(parkFavorite.Id, user.Id);
             }
+            /*var review = ParkReview
+                .Where(r => r.ParkId.Equals(id.Value))
+                .ToList();
+            if (review.Count() > 0)
+            {
+                var reviewSum = review.Sum(r => r.ParkReview.Value);
+                ParkReviews.ReviewValue = reviewSum;
+            }
+            else
+            {
+                ParkReviews.ReviewValue = 0;
+            }*/
             return Ok(parks);
         }
         [HttpGet("{id}")]
         public IActionResult GetParkById(int id)
         {
             var park = _repo.GetParkById(id);
+
             if (park == null)
             {
                 return NotFound();
             }
+            /*var reviewCounts = _repo.GetParkReviewsCount(id);
+            if(reviewCounts.Count() >0)
+            {
+                var reviewSum = reviewCounts.Sum(r => r.ParkReviews.ReviewValue);
+                var reviewCount = reviewCounts.Count();
+            }
+*/
             return Ok(park);
         }
         private UserProfile GetCurrentUser()

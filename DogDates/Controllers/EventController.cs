@@ -42,15 +42,15 @@ namespace DogDates.Controllers
         {
             var user = GetCurrentUser();
             var eventToDelete = _eventRepo.GetEventById(id);
-            if(eventToDelete.UserProfileId != user.Id)
+            if(eventToDelete.UserProfile.Id != user.Id)
             {
                 return Unauthorized();
             }
             _eventRepo.Delete(id);
                 return NoContent();
         }
-        [HttpPut("{id}")]
-        public IActionResult Update(int id, Event taco)
+        [HttpPut("{eventId}")]
+        public IActionResult Update(int EventId, Event taco)
             {
             var user = GetCurrentUser();
 

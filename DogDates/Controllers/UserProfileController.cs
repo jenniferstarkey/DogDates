@@ -30,6 +30,11 @@ namespace DogDates.Controllers
         {
             return Ok(_repo.GetByFirebaseUserId(firebaseUserId));
         }
+        [HttpGet("edit/{userId}")]
+        public IActionResult GetUserById(int userId)
+        {
+            return Ok(_repo.GetByUserId(userId));
+        }
 
         [HttpPost]
         public IActionResult Post(UserProfile userProfile)
