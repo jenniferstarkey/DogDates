@@ -34,6 +34,7 @@ const EventFavoriteList = () => {
             ))}
 
         </div>
+
     )
 };
 export default EventFavoriteList;

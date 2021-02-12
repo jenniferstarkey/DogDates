@@ -5,7 +5,9 @@ import { Jumbotron, Button } from "reactstrap";
 import EventCard from "../components/EventCard"
 import { EventForm } from "../components/EventForm";
 import StarRating from "../components/StarRating";
-import Paws from "../components/Stars";
+import Rating from "../components/StarRating";
+import "./ParkDetails.css"
+import "../App.css"
 
 const ParkDetails = () => {
     const { parkId } = useParams();
@@ -33,20 +35,17 @@ const ParkDetails = () => {
     }
     return (
         <div>
-            <Button onClick={() => {
+
+            <p className="park_name">{park.name}</p>
+            <button className="secondary-button" onClick={() => {
                 history.goBack()
-            }}>Go Back</Button>
-            <Paws />
-            {/* <div className="actions">
-                <button type="submit" onClick={this.saveRating}>
-                    Submit Rating
-                </button>
-            </div> */}
-            <Jumbotron style={{ backgroundImage: `url('${park.parkImage}')` }}>
+            }}>Go Back</button>
+
+            <Jumbotron className="details_jumbo" style={{ backgroundImage: `url('${park.parkImage}')` }}>
             </Jumbotron>
-            <div className="container">
-                <h1>{park.name}</h1>
+            <div className="park_details">
                 <p>{park.street} {park.city}, {park.state} {park.zipCode}</p>
+                <Rating />
             </div>
             <div>
                 <h2>Events</h2>

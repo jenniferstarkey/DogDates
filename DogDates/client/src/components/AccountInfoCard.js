@@ -3,11 +3,12 @@ import Toastify from 'toastify-js'
 import { Card, Row, Col, CardImg, CardText, Button, Form, Input, CardBody, ButtonGroup, FormGroup, Label } from "reactstrap";
 import { UserProfileContext } from "../providers/UserProfileProvider";
 import { useParams } from "react-router-dom";
+import { toast } from "react-toastify";
 
 
 const AccountInfo = (props) => {
     const { getCurrentUser, getToken } = useContext(UserProfileContext);
-    let [userProfile, setUserProfile] = useState([]);
+    let [userProfile, setUserProfile] = useState({});
     const [isEditing, setIsEditing] = useState(false);
     const user = getCurrentUser();
     const [loading, setLoading] = useState(false);
@@ -28,10 +29,9 @@ const AccountInfo = (props) => {
         const file = await res.json()
         setImage(file.secure_url)
         setLoading(false)
-        console.log(file)
     }
     useEffect(() => {
-        setUserProfile(user);
+        getAccount();
     }, []);
 
 
@@ -63,9 +63,15 @@ const AccountInfo = (props) => {
             return null;
         }
     }
+
+
+
+
     const updateAccount = () => {
         const user = getCurrentUser();
-        userProfile.profileImage = image;
+        if (image != undefined) {
+            userProfile.profileImage = image;
+        }
         getToken()
             .then((token) =>
                 fetch(`/api/userprofile/${user.id}`, {
@@ -74,13 +80,25 @@ const AccountInfo = (props) => {
                         "Content-Type": "application/json",
                         Authorization: `Bearer ${token}`,
                     },
+
                     body: JSON.stringify(userProfile)
                 }))
             .then(() => {
-                console.log(userProfile)
                 setIsEditing(false);
+                getAccount();
             })
     }
+    const getAccount = (token) => {
+        getToken().then((token) =>
+            fetch(`/api/userprofile/edit/${user.id}`, {
+                method: "GET",
+                headers: {
+                    Authorization: `Bearer ${token}`
+                },
+            })).then((res) => res.json()
+                .then((u) => setUserProfile(u)))
+
+    };
 
     return (
         <>
@@ -94,7 +112,7 @@ const AccountInfo = (props) => {
                                     <Form className="w-100">
                                         <FormGroup>
                                             <Label for="profileImage">Profile Image</Label>
-                                            <Input type="file" name="file" onChange={uploadImage}
+                                            <Input type="file" id="profileImage" onChange={uploadImage}
                                                 id="profileImage" />
                                         </FormGroup>
                                         <FormGroup>
@@ -156,17 +174,17 @@ const AccountInfo = (props) => {
 
                                 <Row>
                                     <Col s="12" md="4">
-                                        <CardImg src={user.profileImage} />
+                                        <CardImg src={userProfile.profileImage} />
                                     </Col>
                                     <Col s="12" md="6" className="mt-5">
-                                        <CardText>Username: {user.displayName}</CardText>
-                                        <CardText>Email: {user.email}</CardText>
-                                        <CardText>First Name: {user.firstName}</CardText>
-                                        <CardText>Last Name: {user.lastName}</CardText>
-                                        <CardText>City: {user.city}</CardText>
-                                        <CardText>State: {user.state}</CardText>
-                                        <CardText>Zip Code: {user.zipCode}</CardText>
-                                        <CardText>Bio: {user.bio}</CardText>
+                                        <CardText>Username: {userProfile.displayName}</CardText>
+                                        <CardText>Email: {userProfile.email}</CardText>
+                                        <CardText>First Name: {userProfile.firstName}</CardText>
+                                        <CardText>Last Name: {userProfile.lastName}</CardText>
+                                        <CardText>City: {userProfile.city}</CardText>
+                                        <CardText>State: {userProfile.state}</CardText>
+                                        <CardText>Zip Code: {userProfile.zipCode}</CardText>
+                                        <CardText>Bio: {userProfile.bio}</CardText>
                                         <EditButton />
                                     </Col>
                                 </Row>

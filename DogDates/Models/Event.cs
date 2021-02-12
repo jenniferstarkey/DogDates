@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DogDates.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -16,5 +17,6 @@ namespace DogDates.Models
         public int ParkId { get; set; }
         public DateTime CreatedDateTime { get; set; }
         public List<Comment> Comments { get; set; }
+        public List<EventFavorites> EventFavorite { get; set; }
     }
 }

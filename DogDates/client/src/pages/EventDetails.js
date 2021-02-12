@@ -23,6 +23,7 @@ const EventDetails = () => {
     const [pendingDelete, setPendingDelete] = useState(false);
     const [isEditing, setIsEditing] = useState(false);
     const history = useHistory();
+    const [eventSaved, setEventSaved] = useState(false);
 
     const addSavedEvent = (savedEvent) => {
         const user = JSON.parse(localStorage.getItem("userProfile"))
@@ -36,14 +37,14 @@ const EventDetails = () => {
                     Authorization: `Bearer ${token}`,
                 },
                 body: JSON.stringify(eventToSave),
-            }).then(events)
+            }).then((events) => setEventSaved(!eventSaved)),
+
         );
 
     };
     const deleteSavedEvent = (event) => {
         const user = JSON.parse(localStorage.getItem("userProfile"))
         const eventToDelete = { eventId: event, userProfileId: user.id };
-        console.log(eventToDelete)
 
         getToken().then((token) =>
             fetch(`/api/eventfavorites/delete`, {
@@ -55,7 +56,7 @@ const EventDetails = () => {
                 body: JSON.stringify(eventToDelete),
             }
 
-            ).then(events)
+            ).then((events) => setEventSaved(!eventSaved))
 
         );
     };
@@ -78,9 +79,9 @@ const EventDetails = () => {
                 }))
             .then((theEvent) => {
                 setTheEvent(theEvent);
-                console.log(theEvent)
             });
-    }, []);
+    }, [eventSaved]);
+
     const handleChange = (e) => {
         const stateToChange = { ...theEvent }
         stateToChange[e.target.id] = e.target.value;
@@ -95,6 +96,12 @@ const EventDetails = () => {
         setTheEvent("");
     }
     const updateEvent = () => {
+        const user = JSON.parse(localStorage.getItem("userProfile"))
+        const eventToUpdate = {
+            id: theEvent.id, userProfileId: user.id, title: theEvent.title,
+            details: theEvent.title, eventDateTime: theEvent.eventDateTime,
+            parkId: theEvent.parkId, createdDateTime: theEvent.createdDateTime
+        };
         getToken()
             .then((token) =>
                 fetch(`/api/event/${eventId}`, {
@@ -103,7 +110,7 @@ const EventDetails = () => {
                         "Content-Type": "application/json",
                         Authorization: `Bearer ${token}`,
                     },
-                    body: JSON.stringify(theEvent)
+                    body: JSON.stringify(eventToUpdate)
                 }))
             .then(() => {
                 setIsEditing(false);
@@ -126,8 +133,8 @@ const EventDetails = () => {
         )
     }
     const EditButton = () => {
-        const user = getCurrentUser()
-        if (user.id === theEvent.userProfileId) {
+        const user = getCurrentUser();
+        if (user.id === theEvent.userProfile.id) {
             return <Button
                 className="mt-5  mr-3 px-1"
                 color="info"
@@ -142,7 +149,7 @@ const EventDetails = () => {
     }
     const DeleteButton = () => {
         const user = getCurrentUser()
-        if (user.id === theEvent.userProfileId) {
+        if (user.id === theEvent.userProfile.id) {
             return <Button
                 className="mt-5  mr-3 px-1"
                 color="info"
@@ -199,7 +206,7 @@ const EventDetails = () => {
                                 <div>
                                 </div>{theEvent.isFavorited == true || theEvent.isFavorited == null ?
                                     <button className="secondary_button" color="E2BACD" onClick={(e) => deleteSavedEvent(theEvent.id)}>Remove from saved events</button> :
-                                    <button className="primary_button" onClick={(e) => addSavedEvent(theEvent.id)}>Save Event</button>
+                                    <button className="primary_button" onClick={(e) => addSavedEvent(theEvent.id)} setEventSaved={true}>Save Event</button>
                                 }
                                 <EditButton />
                                 <DeleteButton />

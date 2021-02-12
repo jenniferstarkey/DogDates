@@ -26,10 +26,38 @@ const Register = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-    }
-    if (password !== confirm) {
-        toast("Oops, try another password");
-        return;
+
+
+        console.log("blah")
+
+        if (password !== confirm) {
+            toast("Oops, looks like your passwords dont match. Try again.");
+            return;
+        }
+
+        setLoading(true);
+        const profile = {
+            firstName,
+            lastName,
+            displayName,
+            email,
+            city,
+            state,
+            zipCode,
+            bio,
+            profileImage,
+        };
+        register(profile, password)
+            .then((user) => {
+                setLoading(false);
+                toast.info(`Welcome ${user.displayName}`);
+                history.push("/");
+            })
+            .catch((err) => {
+                setLoading(false);
+                toast.error("Invalid email");
+            });
+
     }
     const uploadImage = async e => {
         const files = e.target.files
@@ -49,48 +77,19 @@ const Register = () => {
         localStorage.setItem("image", image)
 
         setImageLoading(false)
-        const matches = document.querySelectorAll(".hidden");
-        for (const m of matches) {
-            m.style.display = "block"
-        }
-        const submit = document.querySelector(".submitContainer");
-        submit.style.display = "flex"
-        document.querySelector(".notHidden").style.display = "none"
+        // const matches = document.querySelectorAll(".hidden");
+        // for (const m of matches) {
+        //     m.style.display = "block"
+        // }
+        // const submit = document.querySelector(".submitContainer");
+        // submit.style.display = "flex"
+        // document.querySelector(".notHidden").style.display = "none"
     }
-
-    setLoading(true);
-    const profile = {
-        firstName,
-        lastName,
-        displayName,
-        email,
-        city,
-        state,
-        zipCode,
-        bio,
-        profileImage,
-    };
-    register(profile, password)
-        .then((user) => {
-            setLoading(false);
-            //toast.info(`Welcome ${user.displayName}`);
-            history.push("/");
-        })
-        .catch((err) => {
-            setLoading(false);
-            //toast.error("Invalid email");
-        });
-
-
     return (
         <div className="login-form">
             <form onSubmit={handleSubmit}>
                 <h2 className="text-center">User Register</h2>
                 <div className="form-group uploadForm">
-
-                    <div className='defaultImageContainer'>
-                        <img className='defaultImage-register' src={localStorage.image ? localStorage.image : 'https://build.dfomer.com/wp-content/uploads/2016/04/dummy-post-horisontal-thegem-blog-default.jpg'} />
-                    </div>
 
                     {imageLoading ? (
                         <h6 className="loadingImage">Loading...</h6>
@@ -101,7 +100,7 @@ const Register = () => {
                     <label htmlFor="embedpollfileinput" className="btn dangerBtn notHidden uploadButton">
                         Upload image
                 </label>
-                    <input hidden type="file" onChange={uploadImage} className="inputfile" id="embedpollfileinput" />
+                    <input type="file" onChange={uploadImage} className="inputfile" id="embedpollfileinput" />
 
                     <div className="form-group">
                         <Input

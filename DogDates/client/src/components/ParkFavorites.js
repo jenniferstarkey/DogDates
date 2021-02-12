@@ -7,12 +7,14 @@ const ParkFavoriteList = () => {
     const { userId } = useParams();
     const [favorite, setFavorites] = useState([]);
     const { getToken, getCurrentUser } = useContext(UserProfileContext);
+    const [deletedPark, setDeletedPark] = useState(false);
+
 
     useEffect(() => {
         getToken().then((token) => {
             return getMyFavorites(token)
         })
-    }, [])
+    }, [deletedPark])
     const user = getCurrentUser();
     const getMyFavorites = (token) => {
         return fetch(`/api/parkFavorites/${user.id}`, {
@@ -29,7 +31,7 @@ const ParkFavoriteList = () => {
             <h2>My Park Favorites</h2>
             {favorite.map((favorite) => (
                 <div key={favorite.id}>
-                    <ParkSummary key={favorite.id} park={favorite.favoritedPark} />
+                    <ParkSummary key={favorite.id} park={favorite.favoritedPark} setDeletedPark={setDeletedPark} deletedPark={deletedPark} />
                 </div>
             ))}
 

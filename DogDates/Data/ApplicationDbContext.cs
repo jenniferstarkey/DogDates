@@ -16,5 +16,6 @@ namespace DogDates.Data
         public DbSet<Comment> Comment { get; set; }
         public DbSet<ParkFavorites> ParkFavorites { get; set; }
         public DbSet<EventFavorites> EventFavorites { get; set; }
+        public DbSet<ParkReview> ParkReview { get; set; }
     }
 }
