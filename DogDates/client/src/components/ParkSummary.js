@@ -18,6 +18,7 @@ const ParkSummary = ({ park, setParkAdded, parkAdded, deletedPark, setDeletedPar
     const { getCurrentUser, getToken } = useContext(UserProfileContext);
 
 
+
     const addFavorite = (favoritePark) => {
         const user = JSON.parse(localStorage.getItem("userProfile"))
         const favToAdd = { parkId: favoritePark, userProfileId: user.id };

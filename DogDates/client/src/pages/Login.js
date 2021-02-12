@@ -73,11 +73,11 @@ const Login = () => {
                     <div className="form-group">
                         <Row>
                             <Col xs="auto">
-                                <button type="submit" className="primaryButton" disabled={loading}>
+                                <button type="submit" className="primary-button" disabled={loading}>
                                     Sign in
                                 </button></Col>
                             <Col xs="auto">
-                                <button className="primaryButton"><Link to="/register">Sign up here</Link></button>
+                                <button className="primary-button"><Link to="/register">Sign up here</Link></button>
                             </Col>
                         </Row>
                     </div>

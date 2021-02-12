@@ -42,7 +42,15 @@ namespace DogDates.Repositories
             return _context.Event
                 .Include(e => e.UserProfile)
                 .Where(e => e.ParkId == parkId)
+                .Include(e => e.EventFavorite)
                 .ToList();
+        }
+        public Event GetSingleEventById(int id)
+        {
+            return _context.Event
+                .Include(e => e.Comments)
+                .Include(e => e.EventFavorite)
+                .FirstOrDefault(e => e.Id == id);
         }
         public EventFavorite GetEventById(int id)
         {
@@ -50,6 +58,7 @@ namespace DogDates.Repositories
                 .Include(e => e.UserProfile)
                 .Include(e => e.Comments)
                 .ThenInclude(c => c.userProfile)
+                .Include(e => e.EventFavorite)
                 .Where(e => e.Id == id)
                 .Select(e => new EventFavorite
                 {
@@ -66,13 +75,14 @@ namespace DogDates.Repositories
         }
         public void Delete(int id)
         {
-            var eventToDelete = GetEventById(id);
-            var comments = eventToDelete.Comments;
+            var oneEvent = GetSingleEventById(id);
+
+            var comments = oneEvent.Comments;
             foreach (Comment comment in comments)
             {
                 _context.Comment.Remove(comment);
             }
-                _context.Remove(eventToDelete);
+            _context.Remove(oneEvent);
                 _context.SaveChanges();
         }
         public void Update(Event taco)

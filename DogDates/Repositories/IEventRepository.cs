@@ -12,6 +12,7 @@ namespace DogDates.Repositories
         public void Delete(int id);
         void Update(Event taco);
         void Add(Comment comment);
+        Event GetSingleEventById(int id);
 
     }
 }

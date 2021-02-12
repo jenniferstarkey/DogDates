@@ -11,9 +11,11 @@ export function UserProfileProvider(props) {
     const userProfile = localStorage.getItem("userProfile");
     const [isLoggedIn, setIsLoggedIn] = useState(userProfile != null);
 
+
     const [isFirebaseReady, setIsFirebaseReady] = useState(false);
     useEffect(() => {
         firebase.auth().onAuthStateChanged((u) => {
+            console.log("useEffect")
             setIsFirebaseReady(true);
         });
     }, []);
@@ -41,11 +43,12 @@ export function UserProfileProvider(props) {
     };
 
     const register = (userProfile, password) => {
+        console.log("register")
         return firebase
             .auth()
             .createUserWithEmailAndPassword(userProfile.email, password)
             .then((createResponse) =>
-                saveUser({ ...userProfile, firebaseUserId: createResponse.user.uid })
+                saveUser({ ...userProfile, firebaseId: createResponse.user.uid })
             )
             .then((savedUserProfile) => {
                 localStorage.setItem("userProfile", JSON.stringify(savedUserProfile));
@@ -56,9 +59,9 @@ export function UserProfileProvider(props) {
 
     const getToken = () => firebase.auth().currentUser.getIdToken();
 
-    const getUserProfile = (firebaseUserId) => {
+    const getUserProfile = (firebaseId) => {
         return getToken().then((token) =>
-            fetch(`${apiUrl}/${firebaseUserId}`, {
+            fetch(`${apiUrl}/${firebaseId}`, {
                 method: "GET",
                 headers: {
                     Authorization: `Bearer ${token}`,

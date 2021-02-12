@@ -41,7 +41,7 @@ namespace DogDates.Controllers
         public IActionResult Delete(int id)
         {
             var user = GetCurrentUser();
-            var eventToDelete = _eventRepo.GetEventById(id);
+            var eventToDelete = _eventRepo.GetSingleEventById(id);
             if(eventToDelete.UserProfile.Id != user.Id)
             {
                 return Unauthorized();

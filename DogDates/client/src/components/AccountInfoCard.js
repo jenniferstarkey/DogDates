@@ -27,13 +27,10 @@ const AccountInfo = (props) => {
                 body: data
             })
         const file = await res.json()
-        debugger;
         setImage(file.secure_url)
         setLoading(false)
-        console.log(file)
     }
     useEffect(() => {
-        setUserProfile(user);
         getAccount();
     }, []);
 
@@ -75,7 +72,6 @@ const AccountInfo = (props) => {
         if (image != undefined) {
             userProfile.profileImage = image;
         }
-        debugger;
         getToken()
             .then((token) =>
                 fetch(`/api/userprofile/${user.id}`, {
@@ -89,6 +85,7 @@ const AccountInfo = (props) => {
                 }))
             .then(() => {
                 setIsEditing(false);
+                getAccount();
             })
     }
     const getAccount = (token) => {
@@ -180,7 +177,7 @@ const AccountInfo = (props) => {
                                         <CardImg src={userProfile.profileImage} />
                                     </Col>
                                     <Col s="12" md="6" className="mt-5">
-                                        <CardText>Username: {user.displayName}</CardText>
+                                        <CardText>Username: {userProfile.displayName}</CardText>
                                         <CardText>Email: {userProfile.email}</CardText>
                                         <CardText>First Name: {userProfile.firstName}</CardText>
                                         <CardText>Last Name: {userProfile.lastName}</CardText>

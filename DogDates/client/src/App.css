@@ -39,10 +39,17 @@
     transform: rotate(360deg);
   }
 }
-.primaryButton {
+.primary-button{
   background-color: #EE5500;
   border-radius: 4px;
-  padding: 12px 28px;
+  padding: 8px 18px;
+  margin: .5em;
   
+}
+.secondary-button{
+  background-color: #D9A3AE;
+  border-radius: 4px;
+  padding: 8px 18px;
+
 }
 

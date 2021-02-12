@@ -3,6 +3,8 @@ import React, { Component, useState, useEffect, useContext } from "react";
 import { UserProfileContext } from "../providers/UserProfileProvider";
 import { useParams } from 'react-router-dom';
 import { Form, Button, Input } from "reactstrap";
+import "./StarRating.css"
+import "../App.css"
 
 
 function getPaw(value) {
@@ -40,6 +42,8 @@ export default function Rating() {
     const [reviewValue, setReviewValue] = useState("");
     const user = getCurrentUser();
     const [isAdding, setIsAdding] = useState(false);
+    const [addComplete, setAddComplete] = useState(false);
+
 
 
     useEffect(() => {
@@ -62,9 +66,11 @@ export default function Rating() {
                 }
 
             })
-    }, [])
+    }, [addComplete])
 
     const addReview = () => {
+        hideAdd();
+        setAddComplete(!addComplete)
         const newReview = {
             reviewValue: parseInt(reviewValue),
             parkId: parseInt(parkId),
@@ -100,15 +106,15 @@ export default function Rating() {
                 <Input for="reviewValue" type="text" id="reviewValue" onChange={(e) => setReviewValue(e.target.value)}>
                     How many paws would you like to give this park? (1-5)
                 </Input>
-                <Button onClick={addReview, hideAdd} >Submit</Button>
-                <Button onClick={hideAdd}>Cancel</Button>
+                <button className="primary-button" onClick={addReview} >Submit</button>
+                <button className="secondary-button" onClick={hideAdd}>Cancel</button>
             </Form>
         ) : (
                 <div>
                     {getPaws(pawValue).map(value => (
-                        <img src={getPaw(value)} width={30} />
+                        <img className="paw_image" src={getPaw(value)} width={30} />
                     ))}
-                    <Button onClick={showAddReview}>Add Review</Button>
+                    <button onClick={showAddReview} className="primary-button">Add Review</button>
                 </div>
             )
         }
