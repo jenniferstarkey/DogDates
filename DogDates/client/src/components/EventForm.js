@@ -4,6 +4,7 @@ import { UserProfileContext } from "../providers/UserProfileProvider";
 import {
     Button, Form, Input, Card, CardBody, FormGroup, Label, CardTitle
 } from "reactstrap";
+import "../App.css"
 
 
 export const EventForm = (props) => {
@@ -52,12 +53,13 @@ export const EventForm = (props) => {
     return (
         <div className="container pt-4">
             <div className="row justify-content-center">
-                <Card className="col-sm-12 col-lg-6">
+                <Card className="col-sm-12 col-lg-6 form">
                     <CardBody>
                         <Form>
                             <FormGroup>
                                 <Label for="Title">Title</Label>
                                 <Input
+
                                     id="title"
                                     type="text"
                                     name="Title"
@@ -65,8 +67,9 @@ export const EventForm = (props) => {
                                 />
                             </FormGroup>
                             <FormGroup>
-                                <Label for="Details">Details</Label>
+                                <Label for="Details">Details</Label><br />
                                 <Input
+                                    className="input-field"
                                     id="details"
                                     type="text"
                                     name="Details"
@@ -83,7 +86,7 @@ export const EventForm = (props) => {
                                 />
                             </FormGroup>
                         </Form>
-                        <Button
+                        <button className="primary-button"
                             color="danger"
                             onClick={(e) => {
                                 e.preventDefault();
@@ -91,7 +94,7 @@ export const EventForm = (props) => {
                             }}
                         >
                             SUBMIT POST
-                        </Button>
+                        </button>
                     </CardBody>
                 </Card>
             </div>

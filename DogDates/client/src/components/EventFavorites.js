@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { UserProfileContext, UserProfileProvider } from "../providers/UserProfileProvider";
 import EventCard from "./EventCard";
+import "../App.css"
 
 const EventFavoriteList = () => {
     const { userId } = useParams();
@@ -25,7 +26,7 @@ const EventFavoriteList = () => {
     };
 
     return (
-        <div>
+        <div className="event_favorite_list">
             <h2>My Saved Events</h2>
             {favoriteEvents.map((event) => (
                 <div key={event.id}>

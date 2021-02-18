@@ -34,29 +34,33 @@ const ParkDetails = () => {
         return null
     }
     return (
-        <div>
-
-            <p className="park_name">{park.name}</p>
-            <button className="secondary-button" onClick={() => {
-                history.goBack()
-            }}>Go Back</button>
-
-            <Jumbotron className="details_jumbo" style={{ backgroundImage: `url('${park.parkImage}')` }}>
-            </Jumbotron>
-            <div className="park_details">
-                <p>{park.street} {park.city}, {park.state} {park.zipCode}</p>
-                <Rating />
+        <>
+            <div className="park_header">
+                <p className="park_name">{park.name}</p>
+                <button className="secondary-button park_button" onClick={() => {
+                    history.goBack()
+                }}>Go Back</button>
             </div>
+            <br /><br />
             <div>
+
+                <Jumbotron className="details_jumbo" style={{ backgroundImage: `url('${park.parkImage}')` }}>
+                </Jumbotron>
+                <div className="park_details">
+                    <p>{park.street} {park.city}, {park.state} {park.zipCode}</p>
+                    <Rating />
+                </div>
                 <h2>Events</h2>
                 <EventForm
                     setEvent={setEvent}
                 />
-                {event.map(event => {
-                    return <EventCard key={event.id} event={event} />
-                })}
+                <div className="event_list">
+                    {event.map(event => {
+                        return <EventCard key={event.id} event={event} />
+                    })}
+                </div>
             </div>
-        </div>
+        </>
     );
 };
 export default ParkDetails;

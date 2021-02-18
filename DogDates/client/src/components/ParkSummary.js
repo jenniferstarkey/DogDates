@@ -18,7 +18,6 @@ const ParkSummary = ({ park, setParkAdded, parkAdded, deletedPark, setDeletedPar
     const { getCurrentUser, getToken } = useContext(UserProfileContext);
 
 
-
     const addFavorite = (favoritePark) => {
         const user = JSON.parse(localStorage.getItem("userProfile"))
         const favToAdd = { parkId: favoritePark, userProfileId: user.id };
@@ -56,12 +55,12 @@ const ParkSummary = ({ park, setParkAdded, parkAdded, deletedPark, setDeletedPar
 
 
     return (
-        <Card className="summary_card">
-            <CardImg top width="100%" src={`${park.parkImage})`} alt="Park Image" />
+        <Card className="summary_card" >
+            <a href={`/park/${park.id}`}>
+                <CardImg top width="100%" src={`${park.parkImage})`} alt="Park Image" /></a>
             <CardBody>
-                <CardTitle tag="h5"> <Link to={`/park/${park.id}`}>
+                <CardTitle tag="h5" className="h5">
                     {park.name}
-                </Link>
                 </CardTitle>
                 <CardText>
                     <p>{park.city}, {park.state}</p>
