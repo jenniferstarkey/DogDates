@@ -14,9 +14,17 @@
   margin: 5%;
 }
 .primary_button{
-
+  background-color: #EE5500;
+  border-radius: 4px;
+  padding: 8px 18px;
+  margin: .5em;
 }
 .secondary_button{
   background-color: #E2BACD;
-  border-radius: 8px;
+  border-radius: 4px;
+  padding: 8px 18px;
+  margin: .5em;
+}
+.h5{
+  color: #272343;
 }

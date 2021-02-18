@@ -4,8 +4,9 @@ import { toast } from "react-toastify";
 import EventCard from "../components/EventCard";
 import { UserProfileContext } from "../providers/UserProfileProvider";
 import formatDate from "../utils/dateFormatter";
-import { Spinner } from "reactstrap";
+import { Spinner, Card, CardBody, FormGroup } from "reactstrap";
 import CommentList from "../components/CommentList";
+import "../App.css"
 
 import {
     Button,
@@ -135,13 +136,13 @@ const EventDetails = () => {
     const EditButton = () => {
         const user = getCurrentUser();
         if (user.id === theEvent.userProfile.id) {
-            return <Button
-                className="mt-5  mr-3 px-1"
+            return <button
+                className="secondary-button"
                 color="info"
                 onClick={showEdit}
 
-            >Edit Event
-                    </Button>
+            >Edit My DogDate
+                    </button>
         }
         else {
             return null;
@@ -150,12 +151,12 @@ const EventDetails = () => {
     const DeleteButton = () => {
         const user = getCurrentUser()
         if (user.id === theEvent.userProfile.id) {
-            return <Button
-                className="mt-5  mr-3 px-1"
+            return <button
+                className="secondary-button"
                 color="info"
                 onClick={(e) => setPendingDelete(true)}
-            >Delete Event
-                    </Button>
+            >Delete My DogDate
+                    </button>
         }
         else {
             return null;
@@ -168,67 +169,83 @@ const EventDetails = () => {
 
 
         return (
-            <div className="container pt-4">
-                <div className="row justify-content-center">
-                    {/* If user is editing */}
-                    {isEditing ? (
-                        <Form className="w-100">
-                            <InputGroup>
-                                <Input size="sm" onChange={(e) => handleChange(e)}
-                                    value={theEvent.title} id="title" />
-                                <Input size="sm" onChange={(e) => handleChange(e)}
-                                    value={theEvent.details} id="details" />
-                                <Input type="date" size="sm" onChange={(e) => handleChange(e)}
-                                    value={theEvent.eventDateTime} id="eventDateTime" />
-                                <ButtonGroup size="sm">
-                                    <Button onClick={updateEvent}>Save</Button>
-                                    <Button outline color="danger" onClick={hideEdit}>
-                                        Cancel
+            <>
+                {/* {/* <div className="container pt-4"> */}
+                <div className="container pt-4">
+
+                    <div className="row justify-content-center">
+                        {/* If user is editing */}
+                        {isEditing ? (
+                            <Card className="col-sm-12 col-lg-6 form">
+                                <CardBody>
+                                    <Form className="w-100">
+                                        <InputGroup>
+                                            <FormGroup>
+                                                <Input size="" onChange={(e) => handleChange(e)}
+                                                    value={theEvent.title} id="title" />
+                                            </FormGroup>
+                                            <FormGroup>
+                                                <Input size="" onChange={(e) => handleChange(e)}
+                                                    value={theEvent.details} id="details" />
+                                            </FormGroup>
+                                            <FormGroup>
+                                                <Input type="date" size="sm" onChange={(e) => handleChange(e)}
+                                                    value={theEvent.eventDateTime} id="eventDateTime" />
+                                            </FormGroup>
+                                        </InputGroup>
+                                    </Form>
+                                    <ButtonGroup size="">
+                                        <Button onClick={updateEvent}>Save</Button>
+                                        <Button outline color="danger" onClick={hideEdit}>
+                                            Cancel
                 </Button>
-                                </ButtonGroup>
-                            </InputGroup>
-                        </Form>
-                    ) : (
-                            // If user is not editing
-                            <><div>
-                                <h2> {theEvent.title}</h2>
-                                <p>{theEvent.details}<br />
-                                    {theEvent.eventDateTime == undefined ? null : formatDate(theEvent.eventDateTime)}<br />
-                                </p>
-                                <div>
-                                    {theEvent.userProfile.displayName}
+                                    </ButtonGroup>
+                                </CardBody>
+                            </Card>
+                        ) : (
+                                // If user is not editing
+                                <><div>
                                     <img
                                         src={theEvent.userProfile.profileImage}
                                         alt={theEvent.userProfile.displayName}
                                         className="park-details__avatar rounded-circle"
                                     />
+                                    <div>
+                                        {theEvent.userProfile.displayName}
+                                    </div>
+                                    <br />
+                                    <h2> {theEvent.title}</h2>
+                                    <p>{theEvent.details}<br />
+                                        {theEvent.eventDateTime == undefined ? null : formatDate(theEvent.eventDateTime)}<br />
+                                    </p>
+                                    {theEvent.isFavorited == true || theEvent.isFavorited == null ?
+                                        <button className="secondary_button" color="E2BACD" onClick={(e) => deleteSavedEvent(theEvent.id)}>Remove from saved events</button> :
+                                        <button className="primary_button" onClick={(e) => addSavedEvent(theEvent.id)} setEventSaved={true}>Save Event</button>
+                                    }
+                                    <br />
+                                    <EditButton />
+
+                                    <DeleteButton />
                                 </div>
-                                <div>
-                                </div>{theEvent.isFavorited == true || theEvent.isFavorited == null ?
-                                    <button className="secondary_button" color="E2BACD" onClick={(e) => deleteSavedEvent(theEvent.id)}>Remove from saved events</button> :
-                                    <button className="primary_button" onClick={(e) => addSavedEvent(theEvent.id)} setEventSaved={true}>Save Event</button>
-                                }
-                                <EditButton />
-                                <DeleteButton />
-                            </div>
-                            </>
-                        )}
-                    <Modal isOpen={pendingDelete}>
-                        <ModalHeader>Delete {theEvent.title}?</ModalHeader>
-                        <ModalBody>
-                            Are you sure you want to delete your event <strong>{theEvent.title}</strong>? This action cannot be
+                                </>
+                            )}
+                        <Modal isOpen={pendingDelete}>
+                            <ModalHeader>Delete {theEvent.title}?</ModalHeader>
+                            <ModalBody>
+                                Are you sure you want to delete your event <strong>{theEvent.title}</strong>? This action cannot be
           undone.
         </ModalBody>
-                        <ModalFooter>
-                            <Button onClick={(e) => setPendingDelete(false)}>No, Cancel</Button>
-                            <Button onClick={deleteEvent} className="btn btn-outline-danger">Yes, Delete</Button>
-                        </ModalFooter>
-                    </Modal>
-                </div>
-                <div>
-                    <CommentList />
-                </div>
-            </div >
+                            <ModalFooter>
+                                <Button onClick={(e) => setPendingDelete(false)}>No, Cancel</Button>
+                                <Button onClick={deleteEvent} className="btn btn-outline-danger">Yes, Delete</Button>
+                            </ModalFooter>
+                        </Modal>
+                    </div>
+                    <div>
+                        <CommentList />
+                    </div>
+                </div >
+            </>
         )
     }
 };

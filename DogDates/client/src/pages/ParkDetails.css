@@ -4,8 +4,25 @@
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
+    margin-bottom: .5em;
   }
   .park_header{
-    flex-direction: row;
+    flex-direction: column-reverse;
     flex-wrap: wrap;
+    margin-top: 1em;
   }
+  .park_name{
+    float: left; 
+    margin-left: .5em;
+    color: #272343;
+    font-size: larger ;
+  }
+  .park_button{
+    float: right;
+    margin-right: .5em;
+    margin-top: -.2em;
+  }
+  .event_list{
+   padding-bottom: 2em;
+  }
+  

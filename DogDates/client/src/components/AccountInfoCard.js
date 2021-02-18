@@ -4,6 +4,7 @@ import { Card, Row, Col, CardImg, CardText, Button, Form, Input, CardBody, Butto
 import { UserProfileContext } from "../providers/UserProfileProvider";
 import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
+import "../App.css"
 
 
 const AccountInfo = (props) => {
@@ -52,12 +53,12 @@ const AccountInfo = (props) => {
     const EditButton = () => {
         const user = getCurrentUser()
         if (user.id === user.id) {
-            return <Button
-                className="account-edit mt-5  mr-3 px-1"
+            return <button
+                className="primary-button"
                 onClick={showEdit}
 
             >Edit Profile
-                    </Button>
+                    </button>
         }
         else {
             return null;
@@ -105,7 +106,7 @@ const AccountInfo = (props) => {
             <div className="container">
                 <h1 className="text-center">My Account</h1>
                 <div className="flex align-self-center w-75 mx-auto text-left">
-                    <Card className=" border-0">
+                    <Card className=" account-card">
                         {isEditing ? (
                             <Card>
                                 <CardBody>
@@ -157,12 +158,12 @@ const AccountInfo = (props) => {
                                         </FormGroup>
 
                                         <ButtonGroup size="sm">
-                                            <Button onClick={(e) => {
+                                            <button className="primary-button" onClick={(e) => {
                                                 updateAccount(userProfile);
-                                            }}>Save</Button>
-                                            <Button outline color="danger" onClick={hideEdit}>
+                                            }}>Save</button>
+                                            <button className="primary-button" onClick={hideEdit}>
                                                 Cancel
-                </Button>
+                                            </button>
                                         </ButtonGroup>
                                     </Form>
 

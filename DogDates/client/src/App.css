@@ -1,7 +1,12 @@
 .App {
   text-align: center;
   background-color: #e3f6f5;
-  height: 2000px;
+  height: 1400px;
+  background-repeat: no-repeat fixed center;
+}
+  
+.sub_text{
+  color: #2D334A;
 }
 
 .App-logo {
@@ -44,12 +49,46 @@
   border-radius: 4px;
   padding: 8px 18px;
   margin: .5em;
+  font-size: small;
   
 }
 .secondary-button{
   background-color: #D9A3AE;
   border-radius: 4px;
   padding: 8px 18px;
+  margin: .5em;
+  font-size: small;
 
+}
+.form{
+  margin: 1em;;
+}
+.event_favorite_list{
+margin-bottom: 1em;
+}
+.park-details__avatar {
+  /* position: absolute; */
+  margin: 0 auto;
+  left: 0;
+  right: 0;
+  top: -50px;
+  width: 95px;
+  height: 95px;
+  border-radius: 50%;
+  z-index: 9;
+  /* padding: 15px; */
+  box-shadow: 1px 1px 3px 3px rgba(0, 0, 0, 0.1);
+}
+.comment-edit-form{
+  padding: .5em;
+  
+}
+.edit-input{
+  margin-top: .5em;
+}
+.commentt-edit-buttons{
+}
+.account-card{
+  padding: 1em;
 }
 
