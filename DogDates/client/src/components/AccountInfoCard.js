@@ -69,7 +69,7 @@ const AccountInfo = (props) => {
 
     const updateAccount = () => {
         const user = getCurrentUser();
-        if (image != undefined) {
+        if (image == undefined || null || "") {
             userProfile.profileImage = image;
         }
         getToken()
