@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import ParkList from "../components/ParkList";
 import { UserProfileContext } from "../providers/UserProfileProvider";
 import "./Explore.css"
+import "../App.css"
 
 
 const Explore = () => {
@@ -31,17 +32,22 @@ const Explore = () => {
     }
 
     return (
-        <div className="park_explore">
-            <h2>Explore Parks</h2>
+        <>
+            <div className="park_explore">
+                <div className="park_header">
+                    <h2>Explore Parks</h2>
+                    <label className="switch">
+                        <input type="checkbox" onClick={toggler} />
+                        <span class="slider round"
+                        ><p className="toggle_text">Near<br />Me</p></span>
+                    </label>
+                </div>
 
-            <label className="switch">
-                <input type="checkbox" onClick={toggler} />
-                <span class="slider round"
-                ></span>
-            </label>
-
-            <ParkList parks={parks} setParkAdded={setParkAdded} parkAdded={parkAdded} setDeletedPark={setDeletedPark} deletedPark={deletedPark} />
-        </div>
+                <div>
+                    <ParkList parks={parks} setParkAdded={setParkAdded} parkAdded={parkAdded} setDeletedPark={setDeletedPark} deletedPark={deletedPark} />
+                </div>
+            </div>
+        </>
     )
 };
 export default Explore;

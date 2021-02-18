@@ -4,6 +4,7 @@ import {
     Button, Card, ModalFooter, ModalBody, Modal, ModalHeader,
     Input, InputGroup, Form, ButtonGroup
 } from "reactstrap";
+import "../App.css"
 
 
 const CommentCard = (props) => {
@@ -25,13 +26,13 @@ const CommentCard = (props) => {
     const EditButton = () => {
         const user = getCurrentUser()
         if (user.id === props.comment.userProfileId) {
-            return <Button
-                className="mt-5  mr-3 px-1"
+            return <button
+                className="primary-button"
                 color="info"
                 onClick={showEdit}
 
-            >Edit Comment
-                    </Button>
+            >🖊
+            </button>
         }
         else {
             return null;
@@ -40,12 +41,12 @@ const CommentCard = (props) => {
     const DeleteButton = () => {
         const user = getCurrentUser()
         if (user.id === props.comment.userProfileId) {
-            return <Button
-                className="mt-5  mr-3 px-1"
+            return <button
+                className="primary-button"
                 color="info"
                 onClick={(e) => setPendingDelete(true)}
-            >Delete Comment
-                    </Button>
+            >✖
+            </button>
         }
         else {
             return null;
@@ -94,30 +95,32 @@ const CommentCard = (props) => {
                 <div className="row">
                     <div className="col-lg-5 col-sm-12 py-3">
                         {isEditing ? (
-                            <Form className="w-100">
+                            <Form className="comment-edit-form">
                                 <InputGroup>
-                                    <Input size="sm" onChange={(e) => setContent(e.target.value)}
-                                        id="content" value={content} />
-
-                                    <ButtonGroup size="sm">
-                                        <Button onClick={(e) => {
-                                            updateComment(content);
-                                        }}>Save</Button>
-                                        <Button outline color="danger" onClick={hideEdit}>
-                                            Cancel
-                </Button>
+                                    <Input onChange={(e) => setContent(e.target.value)}
+                                        id="content" className="edit-input" value={content} />
+                                    <br />
+                                    <ButtonGroup className="comment-edit-buttons">
+                                        <button
+                                            className="primary-button"
+                                            onClick={(e) => {
+                                                updateComment(content);
+                                            }}>✔</button>
+                                        <button className="primary-button" onClick={hideEdit}>
+                                            ✖
+                                        </button>
                                     </ButtonGroup>
                                 </InputGroup>
                             </Form>
                         ) : (
                                 <>
                                     <div>
-                                        <h2>{props.comment.userProfile.displayName}</h2>
+                                        <p className="h5">{props.comment.content}</p>
                                         <p>
-                                            {props.comment.content}
+                                            Posted By: {props.comment.userProfile.displayName}
                                         </p>
-                                        <DeleteButton />
                                         <EditButton />
+                                        <DeleteButton />
                                     </div>
                                 </>
                             )}
