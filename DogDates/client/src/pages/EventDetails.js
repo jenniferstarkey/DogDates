@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { useParams, useHistory } from "react-router-dom";
+import { useParams, useHistory, Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import EventCard from "../components/EventCard";
 import { UserProfileContext } from "../providers/UserProfileProvider";
@@ -191,18 +191,20 @@ const EventDetails = () => {
                     ) : (
                             // If user is not editing
                             <><div>
-                                <h2> {theEvent.title}</h2>
-                                <p>{theEvent.details}<br />
-                                    {theEvent.eventDateTime == undefined ? null : formatDate(theEvent.eventDateTime)}<br />
-                                </p>
                                 <div>
-                                    {theEvent.userProfile.displayName}
+                                    <Link to={`userProfile/${theEvent.userProfile}`}>
+                                        {theEvent.userProfile.displayName}
+                                    </Link>
                                     <img
                                         src={theEvent.userProfile.profileImage}
                                         alt={theEvent.userProfile.displayName}
                                         className="park-details__avatar rounded-circle"
                                     />
                                 </div>
+                                <h2> {theEvent.title}</h2>
+                                <p>{theEvent.details}<br />
+                                    {theEvent.eventDateTime == undefined ? null : formatDate(theEvent.eventDateTime)}<br />
+                                </p>
                                 <div>
                                 </div>{theEvent.isFavorited == true || theEvent.isFavorited == null ?
                                     <button className="secondary_button" color="E2BACD" onClick={(e) => deleteSavedEvent(theEvent.id)}>Remove from saved events</button> :
