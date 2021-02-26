@@ -44,7 +44,7 @@ const Register = () => {
             city,
             state,
             zipCode,
-            bio,
+            // bio,
             profileImage,
         };
         register(profile, password)
@@ -88,7 +88,10 @@ const Register = () => {
     return (
         <div className="login-form">
             <form onSubmit={handleSubmit}>
-                <h2 className="text-center">User Register</h2>
+                <div className="avatar bg-primary">
+                    <img src="/CyerraDD.png" />
+                </div>
+                <h2 className="text-center">Create an account</h2>
                 <div className="form-group uploadForm">
 
                     {imageLoading ? (
@@ -172,7 +175,7 @@ const Register = () => {
                             required="required"
                         />
                     </div>
-                    <div className="form-group">
+                    {/* <div className="form-group">
                         <Input
                             onChange={(e) => setBio(e.target.value)}
                             type="text"
@@ -181,7 +184,7 @@ const Register = () => {
                             placeholder="Bio"
                             required="required"
                         />
-                    </div>
+                    </div> */}
                     {/* <div className="form-group">
                         <Input
                             // onChange={(e) => setProfileImage(e.target.value)}

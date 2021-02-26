@@ -167,7 +167,6 @@ const EventDetails = () => {
     }
     else {
 
-
         return (
             <>
                 {/* {/* <div className="container pt-4"> */}
@@ -204,30 +203,33 @@ const EventDetails = () => {
                             </Card>
                         ) : (
                                 // If user is not editing
-                                <><div>
-                                    <img
-                                        src={theEvent.userProfile.profileImage}
-                                        alt={theEvent.userProfile.displayName}
-                                        className="park-details__avatar rounded-circle"
-                                    />
-                                    <div>
-                                        {theEvent.userProfile.displayName}
-                                    </div>
-                                    <br />
-                                    <h2> {theEvent.title}</h2>
-                                    <p>{theEvent.details}<br />
-                                        {theEvent.eventDateTime == undefined ? null : formatDate(theEvent.eventDateTime)}<br />
-                                    </p>
-                                    {theEvent.isFavorited == true || theEvent.isFavorited == null ?
-                                        <button className="secondary_button" color="E2BACD" onClick={(e) => deleteSavedEvent(theEvent.id)}>Remove from saved events</button> :
-                                        <button className="primary_button" onClick={(e) => addSavedEvent(theEvent.id)} setEventSaved={true}>Save Event</button>
-                                    }
-                                    <br />
-                                    <EditButton />
+                                <>
+                                    <Card>
+                                        <CardBody>
+                                            <img
+                                                src={theEvent.userProfile.profileImage}
+                                                alt={theEvent.userProfile.displayName}
+                                                className="park-details__avatar rounded-circle"
+                                            />
+                                            <div>
+                                                {theEvent.userProfile.displayName}
+                                            </div>
+                                            <br />
+                                            <h2> {theEvent.title}</h2>
+                                            <p>{theEvent.details}<br />
+                                                {theEvent.eventDateTime == undefined ? null : formatDate(theEvent.eventDateTime)}<br />
+                                            </p>
 
-                                    <DeleteButton />
-                                </div>
-                                </>
+                                            {theEvent.isFavorited == true || theEvent.isFavorited == null ?
+                                                <button className="secondary_button" color="E2BACD" onClick={(e) => deleteSavedEvent(theEvent.id)}>Remove from saved events</button> :
+                                                <button className="primary_button" onClick={(e) => addSavedEvent(theEvent.id)} setEventSaved={true}>Save Event</button>
+                                            }
+                                            <br />
+                                            <EditButton />
+
+                                            <DeleteButton />
+                                        </CardBody>
+                                    </Card>                                </>
                             )}
                         <Modal isOpen={pendingDelete}>
                             <ModalHeader>Delete {theEvent.title}?</ModalHeader>
