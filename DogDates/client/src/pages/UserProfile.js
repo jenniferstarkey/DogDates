@@ -1,18 +1,36 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { CardBody, Card } from "reactstrap";
+import { toast } from "react-toastify";
 
-const { userId } = useParams();
+const UserProfile = () => {
+    const { userId } = useParams();
+    const [theUser, setTheUser] = useState([]);
 
-const viewUser = () => {
-    const id = user.id
-    fetch(`api/userProfile/${userId}`, {
-        method: "GET",
-    }).then((res) => {
-        if (res === 404) {
-            toast.error("Looks like we can't find that user right now");
-            return;
-        }
-        return res.json();
-    })
+    useEffect(() => {
+
+        fetch(`api/userProfile/details/${userId}`, {
+            method: "GET",
+        }).then((res) => {
+            if (res === 404) {
+                toast.error("Looks like we can't find that user right now");
+                return;
+            }
+            return res.json();
+        }).then((theUser) => {
+            setTheUser(theUser);
+        })
+    }, []);
+
+    return (
+        <>
+            <h2>user profile here</h2>
+            <Card>
+                <CardBody>
+                    <h2>{theUser.displayName}</h2>
+                </CardBody>
+            </Card>
+        </>
+    )
 }
-const user = viewUser.id;
+export default UserProfile;

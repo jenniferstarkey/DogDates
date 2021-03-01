@@ -16,7 +16,7 @@ import {
     ModalFooter, ModalHeader
 } from "reactstrap";
 
-const EventDetails = () => {
+const EventDetails = ({ }) => {
     const { getCurrentUser, getToken } = useContext(UserProfileContext);
     const [events, setEvents] = useState([]);
     const [theEvent, setTheEvent] = useState([]);
@@ -178,7 +178,6 @@ const EventDetails = () => {
         return <Spinner className="app-spinner dark" />
     }
     else {
-
         return (
             <>
                 {/* {/* <div className="container pt-4"> */}
@@ -218,13 +217,14 @@ const EventDetails = () => {
                                 <>
                                     <Card>
                                         <CardBody>
-                                            <Link to={`/userProfile/${user}`}>
+                                            <a href={`/userprofile/details/${theEvent.userProfile.id}`}>
+                                                {/* <Link to={`/userProfile/${user}`}> */}
                                                 <img
                                                     src={theEvent.userProfile.profileImage}
                                                     alt={theEvent.userProfile.displayName}
                                                     className="park-details__avatar rounded-circle"
                                                 />
-                                            </Link>
+                                            </a>
                                             <div>
                                                 {theEvent.userProfile.displayName}
                                             </div>

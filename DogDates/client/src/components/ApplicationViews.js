@@ -8,6 +8,7 @@ import ParkDetails from "../pages/ParkDetails";
 import EventDetails from "../pages/EventDetails";
 import Home from "../pages/Home";
 import MyAccount from "../pages/MyAccount";
+import UserProfile from "../pages/UserProfile";
 
 const ApplicationViews = () => {
     const { isLoggedIn } = useContext(UserProfileContext);
@@ -28,6 +29,9 @@ const ApplicationViews = () => {
             </Route>
             <Route path="/myAccount" >
                 {isLoggedIn ? <MyAccount /> : <Redirect to="/login" />}
+            </Route>
+            <Route path="/userProfile/details/:userId(\d+)" >
+                {isLoggedIn ? <UserProfile /> : <Redirect to="/login" />}
             </Route>
 
             <Route path="/login">
