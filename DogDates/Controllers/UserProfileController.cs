@@ -72,7 +72,7 @@ namespace DogDates.Controllers
             _repo.Update(user);
             return NoContent(); 
         }
-        [HttpGet("user/{userId}")]
+        [HttpGet("details/{userId}")]
         public IActionResult GetByUserId(int userId)
         {
             return Ok(_repo.GetByUserId(userId));
