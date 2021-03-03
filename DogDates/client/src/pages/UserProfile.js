@@ -26,7 +26,6 @@ const UserProfile = () => {
                 setTheUser(theUser);
             })
     }, []);
-    console.log(theUser)
 
     return (
         <>
