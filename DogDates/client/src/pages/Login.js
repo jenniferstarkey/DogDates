@@ -46,9 +46,9 @@ const Login = () => {
         <Container>
             <div className="login-form">
                 <form onSubmit={handleSubmit}>
-                    {/* <div className="avatar bg-primary"> */}
-                    <img src="/DD_logo.png" />
-                    {/* </div> */}
+                    <div className="avatar bg-primary">
+                        <img src="/CyerraDD.png" />
+                    </div>
                     <h2 className="text-center">Sign in to your account</h2>
                     <div className="form-group">
                         <Input

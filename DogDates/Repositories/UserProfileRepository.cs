@@ -29,15 +29,16 @@ namespace DogDates.Repositories
             _context.Add(userProfile);
             _context.SaveChanges();
         }
-        public UserProfile GetByUserId(int id)
+        public UserProfile GetByUserId(int userId)
         {
             return _context.UserProfile
-                .FirstOrDefault(p => p.Id == id);
+                .FirstOrDefault(p => p.Id == userId);
         }
         public void Update(UserProfile userProfile)
         {
             _context.Entry(userProfile).State = EntityState.Modified;
             _context.SaveChanges();
         }
+       
     }
  }

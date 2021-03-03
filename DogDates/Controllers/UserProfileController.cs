@@ -51,7 +51,7 @@ namespace DogDates.Controllers
             var firebaseUserId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
             return _repo.GetByFirebaseUserId(firebaseUserId);
         }
-        [HttpPut("{id}")]
+        [HttpPut("userProfile/{id}")]
         public IActionResult Update(int id, UserProfile userProfile)
         {
             var user = GetCurrentUser();
@@ -72,6 +72,10 @@ namespace DogDates.Controllers
             _repo.Update(user);
             return NoContent(); 
         }
-        
+        [HttpGet("details/{userId}")]
+        public IActionResult GetByUserId(int userId)
+        {
+            return Ok(_repo.GetByUserId(userId));
+        }
     }
 }

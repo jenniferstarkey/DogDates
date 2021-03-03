@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect } from "react";
 import Toastify from 'toastify-js'
-import { Card, Row, Col, CardImg, CardText, Button, Form, Input, CardBody, ButtonGroup, FormGroup, Label } from "reactstrap";
+import { Card, Row, Col, CardImg, CardText, Button, Collapse, Form, Input, CardBody, ButtonGroup, FormGroup, Label } from "reactstrap";
 import { UserProfileContext } from "../providers/UserProfileProvider";
 import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -14,6 +14,12 @@ const AccountInfo = (props) => {
     const user = getCurrentUser();
     const [loading, setLoading] = useState(false);
     const [image, setImage] = useState("");
+    const [isOpen, setIsOpen] = useState(false);
+    const [parksOpen, setParksOpen] = useState(false);
+
+    const toggle = () => setIsOpen(!isOpen);
+    const togglePark = () => setParksOpen(!parksOpen);
+
 
     const uploadImage = async e => {
         const files = e.target.files
@@ -70,7 +76,7 @@ const AccountInfo = (props) => {
 
     const updateAccount = () => {
         const user = getCurrentUser();
-        if (image != undefined) {
+        if (image == undefined || null || "") {
             userProfile.profileImage = image;
         }
         getToken()
@@ -105,7 +111,7 @@ const AccountInfo = (props) => {
         <>
             <div className="container">
                 <h1 className="text-center">My Account</h1>
-                <div className="flex align-self-center w-75 mx-auto text-left">
+                <div className="flex align-self-center  mx-auto text-left">
                     <Card className=" account-card">
                         {isEditing ? (
                             <Card>
@@ -117,8 +123,8 @@ const AccountInfo = (props) => {
                                                 id="profileImage" />
                                         </FormGroup>
                                         <FormGroup>
-                                            <Label for="displayName">Display Name</Label>
-                                            <Input size="sm" onChange={(e) => handleChange(e)}
+                                            {/* <Label  for="displayName">Display Name</Label> */}
+                                            <Input type="hidden" size="sm" onChange={(e) => handleChange(e)}
                                                 defaultValue={user.displayName} id="displayName" value={userProfile.displayName} />
                                         </FormGroup>
                                         <FormGroup>
@@ -178,15 +184,30 @@ const AccountInfo = (props) => {
                                         <CardImg src={userProfile.profileImage} />
                                     </Col>
                                     <Col s="12" md="6" className="mt-5">
-                                        <CardText>Username: {userProfile.displayName}</CardText>
-                                        <CardText>Email: {userProfile.email}</CardText>
-                                        <CardText>First Name: {userProfile.firstName}</CardText>
-                                        <CardText>Last Name: {userProfile.lastName}</CardText>
-                                        <CardText>City: {userProfile.city}</CardText>
-                                        <CardText>State: {userProfile.state}</CardText>
-                                        <CardText>Zip Code: {userProfile.zipCode}</CardText>
-                                        <CardText>Bio: {userProfile.bio}</CardText>
-                                        <EditButton />
+                                        <button className="accountButton" onClick={toggle} style={{ marginBottom: '1rem' }}>My Profile</button>
+                                        <Card>
+                                            <Collapse isOpen={isOpen}>
+                                                <CardBody>
+                                                    <CardText>Username: {userProfile.displayName}</CardText>
+                                                    <CardText>Email: {userProfile.email}</CardText>
+                                                    <CardText>First Name: {userProfile.firstName}</CardText>
+                                                    <CardText>Last Name: {userProfile.lastName}</CardText>
+                                                    <CardText>City: {userProfile.city}</CardText>
+                                                    <CardText>State: {userProfile.state}</CardText>
+                                                    <CardText>Zip Code: {userProfile.zipCode}</CardText>
+                                                    <CardText>Bio: {userProfile.bio}</CardText>
+                                                    <EditButton />
+                                                </CardBody>
+                                            </Collapse>
+                                        </Card>
+                                    </Col>
+                                    <Col>
+                                        <button className="accountButton" onClick={togglePark} style={{ marginBottom: '1rem' }}>My Favorite Parks</button>
+                                        <Collapse parksOpen={parksOpen}>
+                                            <CardBody>
+                                                <CardText>My parks here</CardText>
+                                            </CardBody>
+                                        </Collapse>
                                     </Col>
                                 </Row>
                             )}
