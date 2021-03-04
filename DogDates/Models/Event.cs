@@ -1,11 +1,14 @@
 ﻿using DogDates.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace DogDates.Models
 {
+    [Table("event")]
+
     public class Event
     {
         public int Id { get; set; }
